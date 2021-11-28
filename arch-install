@@ -21,7 +21,7 @@ pacman --noconfirm -Sy archlinux-keyring
 
 lsblk
 read -p "Enter the drive: " drive
-cfdisk $drive
+cfdisk /dev/$drive
 
 loadkeys us
 timedatectl set-ntp true
