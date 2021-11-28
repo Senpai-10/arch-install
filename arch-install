@@ -34,22 +34,13 @@ p
 +4GB
 t
 82
+p
+n
+p
+2
+
+
 w" | fdisk /dev/$drive
-#   echo "o
-# n
-# p
-# 1
-
-# +4GB
-# t
-# 82
-# p
-# n
-# p
-# 1
-
-
-# w" | fdisk /dev/$drive
 elif [ "$uefi_or_mbr" == "uefi" ]; then
   echo "This option do not work for now!"
   exit
