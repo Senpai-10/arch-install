@@ -11,13 +11,13 @@ printf '\033c'
 echo -e "\tArch install script"
 echo "author: senpai-10 | https://github.com/Senpai-10/"
 
-echo "Selecting the fastest mirrors"
-reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --download-timeout 5
-sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
+# echo "Selecting the fastest mirrors"
+# reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --download-timeout 5
+# sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+# sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 
-pacman -Sy
-pacman --noconfirm -Sy archlinux-keyring
+# pacman -Sy
+# pacman --noconfirm -Sy archlinux-keyring
 
 read -p "uefi or mbr: " uefi_or_mbr
 
@@ -30,6 +30,5 @@ if uefi_or_mbr = "mbr"; then
   # w" | fdisk /dev/$drive
 fi
 
-loadkeys us
-timedatectl set-ntp true
-
+# loadkeys us
+# timedatectl set-ntp true
