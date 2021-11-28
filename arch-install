@@ -17,3 +17,12 @@ sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 
 pacman -Sy
+pacman --noconfirm -Sy archlinux-keyring
+
+lsblk
+read -p "Enter the drive: " drive
+cfdisk $drive
+
+loadkeys us
+timedatectl set-ntp true
+
