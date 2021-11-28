@@ -1,2 +1,2 @@
 # arch-install
-arch install script
+[dotfiles](https://github.com/Senpai-10/dotfiles)
