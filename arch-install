@@ -30,9 +30,11 @@ if [ "$uefi_or_mbr" == "mbr" ]; then
   # echo "o
   # p
   # w" | fdisk /dev/$drive
-fi
-if [ "$uefi_or_mbr" == "uefi" ]; then
-  echo "this option do not work for now!"
+elif [ "$uefi_or_mbr" == "uefi" ]; then
+  echo "This option do not work for now!"
+  exit
+else
+  echo "${uefi_or_mbr} is not a vaild option! (uefi, mbr)"
   exit
 fi
 
