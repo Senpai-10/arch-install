@@ -52,11 +52,11 @@ else
   exit
 fi
 
-mkswap /dev/$drive1
-swapon /dev/$drive1
+mkswap /dev/${drive}1
+swapon /dev/${drive}1
 
-mkfs.ext4 /dev/$drive2
-mount /dev/$drive2 /mnt
+mkfs.ext4 /dev/${drive}2
+mount /dev/${drive}2 /mnt
 
 pacstrap /mnt base base-devel linux linux-firmware neovim
 genfstab -U /mnt >> /mnt/etc/fstab
