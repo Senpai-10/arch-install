@@ -114,7 +114,7 @@ pacman -S --noconfirm xorg-xwud \
     nitrogen nnn nodejs npm obconf onboard openbox \
     pavucontrol pulseaudio pulseaudio-alsa \
     pulseaudio-equalizer pulseaudio-jack python-pip \
-    python-setuptools qemu qemu-arch-extra redis \ 
+    python-setuptools qemu qemu-arch-extra redis \
     reflector rofi rxvt-unicode scrot sdl_image steam \
     terminus-font tree ttf-dejavu ttf-droid \
     xorg-xkbevd xorg-xkbutils xorg-xlsatoms \
