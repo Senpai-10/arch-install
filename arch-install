@@ -26,10 +26,21 @@ read -p "uefi or mbr: " uefi_or_mbr
 lsblk
 read -p "Enter the drive: " drive
 if [ "$uefi_or_mbr" == "mbr" ]; then
-  echo "mbr"
-  # echo "o
-  # p
-  # w" | fdisk /dev/$drive
+  echo "o
+n
+p
+1
+
++4GB
+t
+82
+p
+n
+p
+1
+
+
+w" | fdisk /dev/$drive
 elif [ "$uefi_or_mbr" == "uefi" ]; then
   echo "This option do not work for now!"
   exit
