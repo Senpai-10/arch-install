@@ -1,5 +1,10 @@
 # read -p "test: " answer
 source ./clean_up
 
+printf '\033c'
 echo -e "\tArch install script"
 echo "author: senpai-10 | https://github.com/Senpai-10/"
+
+echo "Selecting the fastest mirrors"
+reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --download-timeout 5
+sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
