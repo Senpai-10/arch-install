@@ -24,7 +24,7 @@ pacman --noconfirm -Sy archlinux-keyring
 loadkeys us
 timedatectl set-ntp true
 
-read -p "uefi or mbr: " uefi_or_mbr
+read -p "uefi or bios/mbr (mbr): " uefi_or_mbr
 
 lsblk
 read -p "Enter the drive: " drive
