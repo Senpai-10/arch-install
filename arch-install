@@ -82,6 +82,7 @@ echo $hostname > /etc/hostname
 echo "127.0.0.1       localhost" >> /etc/hosts
 echo "::1             localhost" >> /etc/hosts
 echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
+echo "root password"
 passwd
 pacman --noconfirm -S grub networkmanager network-manager-applet \
   dialog wireless_tools wpa_supplicant os-prober mtools dosfstools \
