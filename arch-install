@@ -125,7 +125,7 @@ pacman -S --noconfirm xorg-xwud \
     sxiv mpv zathura zathura-pdf-mupdf ffmpeg imagemagick  \
     fzf man-db python-pywal youtube-dl xclip maim \
     zip unzip unrar p7zip xdotool papirus-icon-theme  \
-    ntfs-3g sxhkd zsh pipewire pipewire-pulse \
+    ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
     libnotify slock jq dhcpcd pamixer which yarn yad vivaldi git
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
