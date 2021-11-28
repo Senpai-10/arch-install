@@ -1,0 +1,5 @@
+# read -p "test: " answer
+source ./clean_up
+
+echo -e "\tArch install script"
+echo "author: senpai-10 | https://github.com/Senpai-10/"
