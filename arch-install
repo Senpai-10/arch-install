@@ -13,13 +13,16 @@ printf '\033c'
 echo -e "\tArch install script"
 echo "author: senpai-10 | https://github.com/Senpai-10/"
 
-# echo "Selecting the fastest mirrors"
-# reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --download-timeout 5
-# sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-# sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
+echo "Selecting the fastest mirrors"
+reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --download-timeout 5
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 
-# pacman -Sy
-# pacman --noconfirm -Sy archlinux-keyring
+pacman -Sy
+pacman --noconfirm -Sy archlinux-keyring
+
+loadkeys us
+timedatectl set-ntp true
 
 read -p "uefi or mbr: " uefi_or_mbr
 
@@ -49,5 +52,66 @@ else
   exit
 fi
 
-# loadkeys us
-# timedatectl set-ntp true
+mkswap /dev/$drive1
+swapon /dev/$drive1
+
+mkfs.ext4 /dev/$drive2
+mount /dev/$drive2 /mnt
+
+pacstrap /mnt base base-devel linux linux-firmware neovim
+genfstab -U /mnt >> /mnt/etc/fstab
+
+echo -e "drive=$drive\n" > /mnt/arch-install-2
+sed '1,/^#part2$/d' arch-install >> /mnt/arch-install-2
+chmod +x /mnt/arch-install-2
+arch-chroot /mnt ./arch-install-2
+exit
+
+#part2
+printf '\033c'
+pacman -S --noconfirm sed
+sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+ln -sf /usr/share/zoneinfo/Asia/Riyadh /etc/localtime
+hwclock --systohc
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+read -p "hostname: " hostname
+echo $hostname > /etc/hostname
+echo "127.0.0.1       localhost" >> /etc/hosts
+echo "::1             localhost" >> /etc/hosts
+echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
+passwd
+pacman --noconfirm -S grub networkmanager network-manager-applet dialog wireless_tools wpa_supplicant os-prober mtools dosfstools base-devel linux-headers
+grub-install --target=i386-pc /dev/$drive
+grub-mkconfig -o /boot/grub/grub.cfg
+pacman -S --noconfirm xorg-server xorg-xinit xorg-xkill xorg-xsetroot xorg-xprop \
+     noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-jetbrains-mono ttf-joypixels ttf-font-awesome \
+     sxiv mpv zathura zathura-pdf-mupdf ffmpeg imagemagick  \
+     fzf man-db python-pywal youtube-dl xclip maim \
+     zip unzip unrar p7zip xdotool papirus-icon-theme  \
+     ntfs-3g git sxhkd zsh pipewire pipewire-pulse \
+     arc-gtk-theme rsync firefox dash \
+     libnotify slock jq \
+     dhcpcd pamixer
+systemctl enable NetworkManager.service --now
+rm /bin/sh
+ln -s zsh /bin/sh
+echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+read -p "Enter Username: " username
+useradd -m -G wheel $username
+passwd $username
+echo "pre-Installation Finish Reboot now"
+arch_install_3_path=/home/$username/arch-install-3
+sed '1,/^#part3$/d' arch-install-2 > $arch_install_3_path
+chown $username:$username $arch_install_3_path
+chmod +x $arch_install_3_path
+su -c $arch_install_3_path -s /bin/sh $username
+exit 
+
+#part3
+printf '\033c'
+cd $HOME
+# clone dotfiles and copy or link 
+exit
