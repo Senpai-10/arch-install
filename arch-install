@@ -113,5 +113,6 @@ exit
 #part3
 printf '\033c'
 cd $HOME
-# clone dotfiles and copy or link 
+# clone dotfiles and rename to .dotfiles 
+# remove old arch script and use it just for backups and copying dotfiles 
 exit
