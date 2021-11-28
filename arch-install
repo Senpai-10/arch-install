@@ -23,7 +23,7 @@ read -p "uefi or mbr: " uefi_or_mbr
 
 lsblk
 read -p "Enter the drive: " drive
-fdisk /dev/$drive
+cfdisk /dev/$drive
 
 loadkeys us
 timedatectl set-ntp true
