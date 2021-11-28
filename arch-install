@@ -19,9 +19,11 @@ sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 pacman -Sy
 pacman --noconfirm -Sy archlinux-keyring
 
+read -p "uefi or mbr: " uefi_or_mbr
+
 lsblk
 read -p "Enter the drive: " drive
-cfdisk /dev/$drive
+fdisk /dev/$drive
 
 loadkeys us
 timedatectl set-ntp true
