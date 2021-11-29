@@ -127,9 +127,8 @@ pacman -S --noconfirm xorg-xwud \
     zip unzip unrar p7zip xdotool papirus-icon-theme  \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
-    libnotify slock jq dhcpcd pamixer which yarn yad vivaldi git
+    libnotify slock jq dhcpcd pamixer which yarn yad vivaldi git &&
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
-sleep 5
 yay -S alacritty-themes
 yay -S brave-bin
 yay -S btops-git
