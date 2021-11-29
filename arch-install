@@ -102,14 +102,14 @@ pacman -S --noconfirm xorg-xwud \
     xorg-xauth xorg-xbacklight xorg-xcmsdb xorg-xcursorgen \
     xorg-xdpyinfo xorg-xdriinfo xorg-xev xorg-xgamma \
     xorg-xhost xorg-xinput xorg-xkbcomp \
-    xorg-xpr xorg-xrandr alacritty alsa-tools alsa-utils atom autoconf automake \
-    bashtop bat bc binutils bison bitwarden \
+    xorg-xpr xorg-xrandr alacritty alsa-tools alsa-utils atom \
+    bashtop bat bc bitwarden \
     bitwarden-cli bspwm cmus code discord \
     dmenu dnsmasq docker easytag emacs \
     fd feh fff ffmpegthumbnailer ffmpegthumbs \
-    flameshot flex gimp gnome-calculator \
-    gnome-system-monitor groff highlight htop \
-    imwheel iptables-nft jgmenu kitty kmix \
+    flameshot gimp gnome-calculator \
+    gnome-system-monitor highlight htop \
+    imwheel jgmenu kitty kmix \
     lib32-libpulse libguestfs libpng12 libvirt \
     lxappearance lxappearance-obconf menumaker nautilus nemo neofetch \
     nitrogen nnn nodejs npm obconf onboard openbox \
@@ -127,7 +127,7 @@ pacman -S --noconfirm xorg-xwud \
     zip unzip unrar p7zip xdotool papirus-icon-theme  \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
-    libnotify slock jq dhcpcd pamixer which yarn yad vivaldi
+    slock jq dhcpcd pamixer which yarn yad vivaldi
 # git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
 # yay -S alacritty-themes
 # yay -S brave-bin
