@@ -29,21 +29,38 @@ read -p "uefi or bios/mbr (mbr): " uefi_or_mbr
 lsblk
 read -p "Enter the drive: " drive
 if [ "$uefi_or_mbr" == "mbr" ]; then
-  echo "o
-n
-p
-1
+#   echo "o
+# n
+# p
+# 1
 
-+4GB
-t
-82
-p
-n
-p
-2
+# +4GB
+# t
+# 82
+# p
+# n
+# p
+# 2
 
 
-w" | fdisk /dev/$drive
+# w" | fdisk /dev/$drive
+  (
+    echo o
+    echo n
+    echo p
+    echo 1
+    echo 
+    echo +4GB
+    echo t
+    echo 82
+    echo p
+    echo n
+    echo p
+    echo 2
+    echo 
+    echo 
+    echo w
+  ) | sudo fdisk
 elif [ "$uefi_or_mbr" == "uefi" ]; then
   echo "This option does not work for now!"
   exit
@@ -114,7 +131,7 @@ pacman -S --noconfirm xorg-xwud \
     lxappearance lxappearance-obconf menumaker nautilus nemo neofetch \
     nitrogen nnn nodejs npm obconf onboard openbox \
     pavucontrol pulseaudio pulseaudio-alsa \
-    pulseaudio-equalizer pulseaudio-jack python-pip \
+    pulseaudio-equalizer pulseaudio-jack \
     python-setuptools qemu qemu-arch-extra redis \
     reflector rofi rxvt-unicode scrot sdl_image steam \
     terminus-font tree ttf-dejavu ttf-droid \
