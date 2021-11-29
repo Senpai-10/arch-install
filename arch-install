@@ -128,55 +128,55 @@ pacman -S --noconfirm xorg-xwud \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
     slock jq dhcpcd pamixer which yarn yad vivaldi
-# git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
-# yay -S alacritty-themes
-# yay -S brave-bin
-# yay -S btops-git
-# yay -S cava-git
-# yay -S code-marketplace
-# yay -S colorpicker
-# yay -S compton-conf-git
-# yay -S consolas-font
-# yay -S deadd-notification-center-bin
-# yay -S discord-qt-appimage
-# yay -S dxhd-bin
-# yay -S figma-linux
-# yay -S fontpreview-ueberzug-git
-# yay -S google-chrome
-# yay -S lf-bin
-# yay -S ls-icons
-# yay -S lxqt-build-tools-git
-# yay -S mongodb-bin
-# yay -S mongodb-tools-bin
-# yay -S nerd-fonts-complete
-# yay -S noto-fonts-sc
-# yay -S otf-symbola
-# yay -S picom-ibhagwan-git
-# yay -S polybar
-# yay -S selectdefaultapplication-git
-# yay -S spacefm
-# yay -S spaceship-prompt-git
-# yay -S spotify
-# yay -S ttf-icomoon-feather
-# yay -S ttf-material-icons-git
-# yay -S ttf-ms-fonts
-# systemctl enable NetworkManager.service --now
-# chsh -s $(which zsh)
-# echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-# read -p "Enter Username: " username
-# useradd -m -G wheel $username
-# passwd $username
-# echo "pre-Installation Finish Reboot now"
-# arch_install_3_path=/home/$username/arch-install-3
-# sed '1,/^#part3$/d' arch-install-2 > $arch_install_3_path
-# chown $username:$username $arch_install_3_path
-# chmod +x $arch_install_3_path
-# su -c $arch_install_3_path -s /bin/sh $username
-# exit 
+git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
+yay -S alacritty-themes
+yay -S brave-bin
+yay -S btops-git
+yay -S cava-git
+yay -S code-marketplace
+yay -S colorpicker
+yay -S compton-conf-git
+yay -S consolas-font
+yay -S deadd-notification-center-bin
+yay -S discord-qt-appimage
+yay -S dxhd-bin
+yay -S figma-linux
+yay -S fontpreview-ueberzug-git
+yay -S google-chrome
+yay -S lf-bin
+yay -S ls-icons
+yay -S lxqt-build-tools-git
+yay -S mongodb-bin
+yay -S mongodb-tools-bin
+yay -S nerd-fonts-complete
+yay -S noto-fonts-sc
+yay -S otf-symbola
+yay -S picom-ibhagwan-git
+yay -S polybar
+yay -S selectdefaultapplication-git
+yay -S spacefm
+yay -S spaceship-prompt-git
+yay -S spotify
+yay -S ttf-icomoon-feather
+yay -S ttf-material-icons-git
+yay -S ttf-ms-fonts
+systemctl enable NetworkManager.service --now
+chsh -s $(which zsh)
+echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+read -p "Enter Username: " username
+useradd -m -G wheel $username
+passwd $username
+echo "pre-Installation Finish Reboot now"
+arch_install_3_path=/home/$username/arch-install-3
+sed '1,/^#part3$/d' arch-install-2 > $arch_install_3_path
+chown $username:$username $arch_install_3_path
+chmod +x $arch_install_3_path
+su -c $arch_install_3_path -s /bin/sh $username
+exit 
 
-# #part3
-# printf '\033c'
-# cd $HOME
-# # clone dotfiles and rename to .dotfiles 
-# # remove old arch script and use it just for backups and copying dotfiles 
-# exit
+#part3
+printf '\033c'
+cd $HOME
+# clone dotfiles and rename to .dotfiles 
+# remove old arch script and use it just for backups and copying dotfiles 
+exit
