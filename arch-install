@@ -148,7 +148,7 @@ printf '\033c'
 cd $HOME
 # clone dotfiles and rename to .dotfiles 
 # remove old arch script and use it just for backups and copying dotfiles 
-git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
+git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u $USER makepkg -si && cd ..
 yay -S alacritty-themes
 yay -S brave-bin
 yay -S btops-git
