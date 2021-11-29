@@ -69,7 +69,7 @@ exit
 
 #part2
 printf '\033c'
-pacman -S --noconfirm sed
+pacman -S --noconfirm sed git
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 ln -sf /usr/share/zoneinfo/Asia/Riyadh /etc/localtime
@@ -127,7 +127,7 @@ pacman -S --noconfirm xorg-xwud \
     zip unzip unrar p7zip xdotool papirus-icon-theme  \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
-    libnotify slock jq dhcpcd pamixer which yarn yad vivaldi git &&
+    libnotify slock jq dhcpcd pamixer which yarn yad vivaldi
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
 yay -S alacritty-themes
 yay -S brave-bin
