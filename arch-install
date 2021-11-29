@@ -160,7 +160,6 @@ yay -S spotify
 yay -S ttf-icomoon-feather
 yay -S ttf-material-icons-git
 yay -S ttf-ms-fonts
-
 systemctl enable NetworkManager.service --now
 chsh -s $(which zsh)
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
