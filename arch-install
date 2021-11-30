@@ -24,11 +24,12 @@ pacman --noconfirm -Sy archlinux-keyring
 loadkeys us
 timedatectl set-ntp true
 
-read -p "uefi or bios/mbr (mbr): " uefi_or_mbr
+read -p "partitioning (mbr, gpt): " partitioning
 
 lsblk
 read -p "Enter the drive: " drive
-if [ "$uefi_or_mbr" == "mbr" ]; then
+if [ "$partitioning" == "mbr" ]; then
+  # bios/mbr
   echo "o
 n
 p
@@ -44,11 +45,12 @@ p
 
 
 w" | fdisk /dev/$drive
-elif [ "$uefi_or_mbr" == "uefi" ]; then
+elif [ "$partitioning" == "gpt" ]; then
+  # uefi
   echo "This option does not work for now!"
   exit
 else
-  echo "${uefi_or_mbr} is not a vaild option! (uefi, mbr)"
+  echo "${partitioning} is not a vaild option! (uefi, mbr)"
   exit
 fi
 
