@@ -171,6 +171,7 @@ echo $USER
 # yay -S lxqt-build-tools-git
 # yay -S mongodb-bin
 # yay -S mongodb-tools-bin
+# yay -S mongosh-bin
 # yay -S nerd-fonts-complete
 # yay -S noto-fonts-sc
 # yay -S otf-symbola
