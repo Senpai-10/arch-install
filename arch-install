@@ -184,4 +184,5 @@ echo $USER
 # yay -S ttf-icomoon-feather
 # yay -S ttf-material-icons-git
 # yay -S ttf-ms-fonts
+# yay -s pnpm
 exit
