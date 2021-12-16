@@ -151,8 +151,8 @@ cd $HOME
 # clone dotfiles and rename to .dotfiles 
 # remove old arch script and use it just for backups and copying dotfiles 
 echo $USER
-# git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u $USER makepkg -si && cd ..
-# yay -S alacritty-themes
+git clone https://aur.archlinux.org/yay.git && cd yay && sudo makepkg -si && cd ..
+yay -S alacritty-themes
 # yay -S brave-bin
 # yay -S btops-git
 # yay -S cava-git
