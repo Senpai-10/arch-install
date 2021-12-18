@@ -143,7 +143,11 @@ ls
 sed '1,/^#part3$/d' arch-install-2 > $arch_install_3_path
 chown $username:$username $arch_install_3_path
 chmod +x $arch_install_3_path
-su -c $arch_install_3_path -s /bin/sh $username
+echo "./$arch_install_3_path" >> ~/.bashrc
+echo "./$arch_install_3_path" >> ~/.zshrc
+echo "REMOVE installation medium!!!!"
+sleep 5 && reboot
+# su -c $arch_install_3_path -s /bin/sh $username
 exit 
 
 #part3
