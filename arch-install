@@ -130,7 +130,7 @@ pacman -S --noconfirm xorg-xwud \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
     slock jq dhcpcd pamixer which yarn yad vivaldi
-systemctl enable NetworkManager.service --now
+systemctl enable NetworkManager.service
 chsh -s $(which zsh)
 # echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers # remove later from sudoers file! and add "%wheel ALL=(ALL) ALL"
