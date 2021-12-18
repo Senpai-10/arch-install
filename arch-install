@@ -26,6 +26,10 @@ partitioning=$(dialog --menu "Select partitioning:" 10 30 4 \
 
 drive=$(dialog --output-fd 1 --menu "Select drive:" 20 40 8 \
   $(lsblk -n --output NAME,SIZE))
+
+hostname=$(dialog --output-fd 1 --inputbox "Hostname: " 10 40)
+username=$(dialog --output-fd 1 --inputbox "Username: " 10 40)
+
 if [ "$partitioning" == "1" ]; then
   # bios/mbr
   echo "o
@@ -62,6 +66,9 @@ pacstrap /mnt base base-devel linux linux-firmware neovim
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo -e "drive=$drive\n" > /mnt/arch-install-2
+echo -e "hostname=$hostname\n" >> /mnt/arch-install-2
+echo -e "username=$username\n" >> /mnt/arch-install-2
+
 sed '1,/^#part2$/d' arch-install >> /mnt/arch-install-2
 chmod +x /mnt/arch-install-2
 arch-chroot /mnt ./arch-install-2
@@ -77,7 +84,6 @@ hwclock --systohc
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
-read -p "hostname: " hostname
 echo $hostname > /etc/hostname
 echo "127.0.0.1       localhost" >> /etc/hosts
 echo "::1             localhost" >> /etc/hosts
@@ -132,7 +138,6 @@ systemctl enable NetworkManager.service
 chsh -s $(which zsh)
 # echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers # remove later from sudoers file! and add "%wheel ALL=(ALL) ALL"
-read -p "Enter Username: " username
 useradd -m -G wheel $username
 passwd $username
 echo "pre-Installation Finish Reboot now"
