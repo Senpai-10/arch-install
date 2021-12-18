@@ -20,7 +20,7 @@ pacman --noconfirm -Sy archlinux-keyring dialog
 loadkeys us
 timedatectl set-ntp true
 
-partitioning=$(dialog --menu "Select partitioning :" 10 30 4 \
+partitioning=$(dialog --menu "Select partitioning:" 10 30 4 \
   1 mbr \
   2 gpt --output-fd 1)
 
