@@ -29,7 +29,7 @@ while true; do
   root_password=$(dialog --output-fd 1 --passwordbox "Root password: " 10 40)
   retype_root_password=$(dialog --output-fd 1 --passwordbox "Root password (Retype): " 10 40)
   [ "$root_password" = "$retype_root_password" ] && break
-  dialog --msgbox "Please try again" 5 20
+  dialog --msgbox "Please make sure your passwords match" 5 20
 done
 
 username=$(dialog --output-fd 1 --inputbox "Username: " 10 40)
