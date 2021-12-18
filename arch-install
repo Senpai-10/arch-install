@@ -146,9 +146,9 @@ chmod +x $arch_install_3_path
 echo "./$arch_install_3_path" >> ~/.bashrc
 echo "./$arch_install_3_path" >> ~/.zshrc
 echo "REMOVE installation medium!!!!"
+exit
 sleep 5 && reboot
 # su -c $arch_install_3_path -s /bin/sh $username
-exit 
 
 #part3
 printf '\033c'
