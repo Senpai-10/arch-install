@@ -189,4 +189,7 @@ yay -S ttf-icomoon-feather
 yay -S ttf-material-icons-git
 yay -S ttf-ms-fonts
 yay -s pnpm
+
+sed -i '/arch/d' .bash_profile
+sed -i '/arch/d' .zsh_profile
 exit
