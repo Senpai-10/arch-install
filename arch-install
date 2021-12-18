@@ -5,7 +5,11 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-printf '\033c'
+clear_screen () {
+  printf '\033c'
+}
+
+clear_screen
 echo -e "\tArch install script"
 echo "author: senpai-10 | https://github.com/Senpai-10/"
 
@@ -22,7 +26,7 @@ hostname=$(dialog --output-fd 1 --inputbox "Hostname: " 10 40)
 root_password=$(dialog --output-fd 1 --passwordbox "Root password: " 10 40)
 username=$(dialog --output-fd 1 --inputbox "Username: " 10 40)
 user_password=$(dialog --output-fd 1 --passwordbox "$username password: " 10 40)
-
+clear_screen
 echo "Selecting the fastest mirrors"
 reflector --latest 100 --sort rate --save /etc/pacman.d/mirrorlist --protocol https
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
@@ -78,7 +82,7 @@ arch-chroot /mnt ./arch-install-2
 exit
 
 #part2
-printf '\033c'
+clear_screen
 pacman -S --noconfirm sed git dialog
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
@@ -149,13 +153,13 @@ chown $username:$username $arch_install_3_path
 chmod +x $arch_install_3_path
 echo "source $arch_install_3_path" >> /home/$username/.bash_profile
 echo "source $arch_install_3_path" >> /home/$username/.zsh_profile
-clear
+clear_screen
 printf "\033[0;31mREMOVE INSTALLATION MEDIUM AND REBOOT\033[0m"
 # su -c $arch_install_3_path -s /bin/sh $username
 exit
 
 #part3
-printf '\033c'
+clear_screen
 cd $HOME
 # clone dotfiles and rename to .dotfiles 
 # remove old arch script and use it just for backups and copying dotfiles 
