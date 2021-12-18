@@ -20,11 +20,13 @@ pacman --noconfirm -Sy archlinux-keyring dialog
 loadkeys us
 timedatectl set-ntp true
 
-read -p "partitioning [mbr, gpt]: " partitioning
+partitioning=$(dialog --menu "Select partitioning :" 10 30 4 \
+  1 mbr \
+  2 gpt --output-fd 1)
 
 lsblk
 read -p "Enter the drive: " drive
-if [ "$partitioning" == "mbr" ]; then
+if [ "$partitioning" == "1" ]; then
   # bios/mbr
   echo "o
 n
@@ -41,7 +43,7 @@ p
 
 
 w" | fdisk /dev/$drive
-elif [ "$partitioning" == "gpt" ]; then
+elif [ "$partitioning" == "2" ]; then
   # uefi
   echo "This option does not work for now!"
   exit
