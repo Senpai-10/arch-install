@@ -190,4 +190,6 @@ yay -S ttf-material-icons-git
 yay -S ttf-ms-fonts
 yay -s pnpm
 
+
+clean_up
 exit

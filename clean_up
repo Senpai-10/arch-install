@@ -1,5 +1,0 @@
-clean_up () {
-  echo "Remove all installation files!"
-  rm /arch-install-2
-  rm ~/arch-install-3
-}
