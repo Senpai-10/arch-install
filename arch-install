@@ -24,8 +24,8 @@ partitioning=$(dialog --menu "Select partitioning:" 10 30 4 \
   1 mbr \
   2 gpt --output-fd 1)
 
-lsblk
-read -p "Enter the drive: " drive
+drive=$(dialog --output-fd 1 --menu "Select drive:" 20 40 8 \
+  $(lsblk -n --output NAME,SIZE))
 if [ "$partitioning" == "1" ]; then
   # bios/mbr
   echo "o
