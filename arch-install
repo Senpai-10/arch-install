@@ -28,7 +28,9 @@ drive=$(dialog --output-fd 1 --menu "Select drive:" 20 40 8 \
   $(lsblk -n --output NAME,SIZE))
 
 hostname=$(dialog --output-fd 1 --inputbox "Hostname: " 10 40)
+root_password=$(dialog --output-fd 1 --passwordbox "Root password: " 10 40)
 username=$(dialog --output-fd 1 --inputbox "Username: " 10 40)
+user_password=$(dialog --output-fd 1 --passwordbox "$username password: " 10 40)
 
 if [ "$partitioning" == "1" ]; then
   # bios/mbr
@@ -67,7 +69,9 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 echo -e "drive=$drive\n" > /mnt/arch-install-2
 echo -e "hostname=$hostname\n" >> /mnt/arch-install-2
+echo -e "root_password=$root_password\n" >> /mnt/arch-install-2
 echo -e "username=$username\n" >> /mnt/arch-install-2
+echo -e "user_password=$user_password\n" >> /mnt/arch-install-2
 
 sed '1,/^#part2$/d' arch-install >> /mnt/arch-install-2
 chmod +x /mnt/arch-install-2
@@ -88,8 +92,7 @@ echo $hostname > /etc/hostname
 echo "127.0.0.1       localhost" >> /etc/hosts
 echo "::1             localhost" >> /etc/hosts
 echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
-echo "root password"
-passwd
+echo $root_password | passwd --stdin
 pacman --noconfirm -S grub networkmanager network-manager-applet \
   wireless_tools wpa_supplicant os-prober mtools dosfstools \
   base-devel linux-headers
@@ -139,7 +142,7 @@ chsh -s $(which zsh)
 # echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers # remove later from sudoers file! and add "%wheel ALL=(ALL) ALL"
 useradd -m -G wheel $username
-passwd $username
+echo $user_password | passwd $username --stdin
 echo "pre-Installation Finish Reboot now"
 arch_install_3_path=/home/$username/arch-install-3
 sed '1,/^#part3$/d' arch-install-2 > $arch_install_3_path
