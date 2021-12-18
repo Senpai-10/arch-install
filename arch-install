@@ -142,8 +142,8 @@ arch_install_3_path=/home/$username/arch-install-3
 sed '1,/^#part3$/d' arch-install-2 > $arch_install_3_path
 chown $username:$username $arch_install_3_path
 chmod +x $arch_install_3_path
-echo "./$arch_install_3_path" >> /home/$username/.bash_profile
-echo "./$arch_install_3_path" >> /home/$username/.zsh_profile
+echo "source $arch_install_3_path" >> /home/$username/.bash_profile
+echo "source $arch_install_3_path" >> /home/$username/.zsh_profile
 clear
 printf "\033[0;31mREMOVE INSTALLATION MEDIUM AND REBOOT\033[0m"
 # su -c $arch_install_3_path -s /bin/sh $username
