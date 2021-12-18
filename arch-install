@@ -9,16 +9,8 @@ printf '\033c'
 echo -e "\tArch install script"
 echo "author: senpai-10 | https://github.com/Senpai-10/"
 
-echo "Selecting the fastest mirrors"
-reflector --latest 100 --sort rate --save /etc/pacman.d/mirrorlist --protocol https
-sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
-
 pacman -Sy
 pacman --noconfirm -Sy archlinux-keyring dialog
-
-loadkeys us
-timedatectl set-ntp true
 
 partitioning=$(dialog --menu "Select partitioning:" 10 30 4 \
   1 mbr \
@@ -31,6 +23,14 @@ hostname=$(dialog --output-fd 1 --inputbox "Hostname: " 10 40)
 root_password=$(dialog --output-fd 1 --passwordbox "Root password: " 10 40)
 username=$(dialog --output-fd 1 --inputbox "Username: " 10 40)
 user_password=$(dialog --output-fd 1 --passwordbox "$username password: " 10 40)
+
+echo "Selecting the fastest mirrors"
+reflector --latest 100 --sort rate --save /etc/pacman.d/mirrorlist --protocol https
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
+
+loadkeys us
+timedatectl set-ntp true
 
 if [ "$partitioning" == "1" ]; then
   # bios/mbr
