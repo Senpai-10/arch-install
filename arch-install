@@ -5,8 +5,6 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-source ./clean_up
-
 printf '\033c'
 echo -e "\tArch install script"
 echo "author: senpai-10 | https://github.com/Senpai-10/"
@@ -190,6 +188,7 @@ yay -S ttf-material-icons-git
 yay -S ttf-ms-fonts
 yay -s pnpm
 
-
-clean_up
+echo "Remove all installation files!"
+rm /arch-install-2
+rm ~/arch-install-3
 exit
