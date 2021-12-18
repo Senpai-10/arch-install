@@ -133,7 +133,7 @@ pacman -S --noconfirm xorg-xwud \
 systemctl enable NetworkManager.service --now
 chsh -s $(which zsh)
 # echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers # remove later from sudoers file!
 read -p "Enter Username: " username
 useradd -m -G wheel $username
 passwd $username
