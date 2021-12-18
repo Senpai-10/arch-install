@@ -111,7 +111,7 @@ echo $hostname > /etc/hostname
 echo "127.0.0.1       localhost" >> /etc/hosts
 echo "::1             localhost" >> /etc/hosts
 echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
-echo $root_password | passwd --stdin
+echo -e "$root_password\n$root_password" | passwd --stdin
 pacman --noconfirm -S grub networkmanager network-manager-applet \
   wireless_tools wpa_supplicant os-prober mtools dosfstools \
   base-devel linux-headers
@@ -161,7 +161,7 @@ chsh -s $(which zsh)
 # echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers # remove later from sudoers file! and add "%wheel ALL=(ALL) ALL"
 useradd -m -G wheel $username
-echo $user_password | passwd $username --stdin
+echo -e "$user_password\n$user_password" | passwd $username --stdin
 echo "pre-Installation Finish Reboot now"
 arch_install_3_path=/home/$username/arch-install-3
 sed '1,/^#part3$/d' arch-install-2 > $arch_install_3_path
