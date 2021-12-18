@@ -39,6 +39,13 @@ while true; do
   dialog --msgbox "Please make sure your passwords match" 5 45
 done
 
+echo -e "root password: $root_password"
+echo -e "root password (retype): $retype_root_password"
+echo -e "user password: $user_password"
+echo -e "user password (retype): $retype_user_password"
+
+sleep 5
+
 clear_screen
 echo "Selecting the fastest mirrors"
 reflector --latest 100 --sort rate --save /etc/pacman.d/mirrorlist --protocol https
