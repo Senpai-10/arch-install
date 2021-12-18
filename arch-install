@@ -154,7 +154,9 @@ printf '\033c'
 cd $HOME
 # clone dotfiles and rename to .dotfiles 
 # remove old arch script and use it just for backups and copying dotfiles 
-echo $USER
+sed -i '/arch/d' .bash_profile
+sed -i '/arch/d' .zsh_profile
+chsh -s $(which zsh)
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
 yay -S alacritty-themes
 yay -S brave-bin
@@ -190,6 +192,4 @@ yay -S ttf-material-icons-git
 yay -S ttf-ms-fonts
 yay -s pnpm
 
-sed -i '/arch/d' .bash_profile
-sed -i '/arch/d' .zsh_profile
 exit
