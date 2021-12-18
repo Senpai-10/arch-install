@@ -95,6 +95,9 @@ arch-chroot /mnt ./arch-install-2
 exit
 
 #part2
+clear_screen () {
+  printf '\033c'
+}
 clear_screen
 pacman -S --noconfirm sed git dialog
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
@@ -172,6 +175,9 @@ printf "\033[0;31mREMOVE INSTALLATION MEDIUM AND REBOOT\033[0m"
 exit
 
 #part3
+clear_screen () {
+  printf '\033c'
+}
 clear_screen
 cd $HOME
 # clone dotfiles and rename to .dotfiles 
