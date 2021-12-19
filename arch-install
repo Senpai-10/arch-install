@@ -298,6 +298,6 @@ sudo sed -i '$ d' /etc/sudoers
 sudo echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 echo "Remove all installation files!"
-rm /arch-install-2
+sudo rm /arch-install-2
 rm -- "$0" # remove arch-install-3
 exit
