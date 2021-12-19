@@ -220,6 +220,8 @@ yay -S --noconfirm ttf-material-icons-git
 yay -S --noconfirm ttf-ms-fonts
 yay -s --noconfirm pnpm
 
+git clone https://github.com/senpai-10/dotfiles .dotfiles && cd .dotfiles
+
 echo "Remove all installation files!"
 rm /arch-install-2
 rm ~/arch-install-3
