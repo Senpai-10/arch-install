@@ -294,8 +294,8 @@ git clone https://github.com/Senpai-10/dmenu.git && cd dmenu && sudo make instal
 cd ..
 git clone https://github.com/Senpai-10/dwmblocks.git && cd dwmblocks && sudo make install &&
 
-sed -i '$ d'/etc/sudoers
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+sudo sed -i '$ d' /etc/sudoers
+sudo echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 echo "Remove all installation files!"
 rm /arch-install-2
