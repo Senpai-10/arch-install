@@ -2,4 +2,3 @@
 
 part3:
   [] clone dotfiles and rename to .dotfiles
-  [] run clean_up funcion
