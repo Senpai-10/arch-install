@@ -299,5 +299,5 @@ sudo echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 echo "Remove all installation files!"
 rm /arch-install-2
-rm ~/arch-install-3
+rm -- "$0"
 exit
