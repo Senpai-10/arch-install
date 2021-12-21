@@ -158,8 +158,7 @@ pacman -S --noconfirm xorg-xwud \
     slock jq dhcpcd pamixer which yarn yad vivaldi gnome
 systemctl enable NetworkManager.service
 chsh -s $(which zsh)
-# echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers # remove later from sudoers file! and add "%wheel ALL=(ALL) ALL"
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 useradd -m -G wheel $username
 echo "$username:$user_password" | chpasswd
 echo "pre-Installation Finish Reboot now"
