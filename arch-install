@@ -155,7 +155,7 @@ pacman -S --noconfirm xorg-xwud \
     zip unzip unrar p7zip xdotool papirus-icon-theme  \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
-    slock jq dhcpcd pamixer which yarn yad vivaldi gnome
+    slock jq dhcpcd pamixer which yarn yad vivaldi gnome gnome-tweaks gnome-shell-extensions
 systemctl enable NetworkManager.service
 chsh -s $(which zsh)
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
