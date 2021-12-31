@@ -218,7 +218,13 @@ yay -S --noconfirm spotify
 yay -S --noconfirm ttf-icomoon-feather
 yay -S --noconfirm ttf-material-icons-git
 yay -S --noconfirm ttf-ms-fonts
-yay -s --noconfirm pnpm
+yay -S --noconfirm pnpm-bin
+yay -S --noconfirm betterdiscord-installer-bin
+yay -S --noconfirm snapd
+yay -S --noconfirm pamac-all 
+yay -S --noconfirm icons-in-terminal
+yay -S --noconfirm inxi
+yay -S --noconfirm epson-inkjet-printer-escpr
 
 git clone https://github.com/senpai-10/dotfiles .dotfiles && 
 cd .dotfiles
