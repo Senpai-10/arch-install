@@ -225,6 +225,7 @@ yay -S --noconfirm pamac-all
 yay -S --noconfirm icons-in-terminal
 yay -S --noconfirm inxi
 yay -S --noconfirm epson-inkjet-printer-escpr
+yay -S --noconfirm gromit-mpx
 
 git clone https://github.com/senpai-10/dotfiles .dotfiles && 
 cd .dotfiles
