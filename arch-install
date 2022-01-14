@@ -155,8 +155,8 @@ pacman -S --noconfirm xorg-xwud \
     zip unzip unrar p7zip xdotool papirus-icon-theme  \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
-    slock jq dhcpcd pamixer which yarn yad vivaldi gnome gnome-tweaks gnome-shell-extensions \
-    plasma kde-applications
+    slock jq dhcpcd pamixer which yarn yad vivaldi \
+    kde-applications kdenlive kate
 systemctl enable NetworkManager.service
 chsh -s $(which zsh)
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -274,10 +274,6 @@ curl -sLf https://spacevim.org/install.sh | bash
 wget https://github.com/Superjo149/auryo/releases/download/v2.5.4/Auryo-2.5.4.AppImage &&
 chmod +x Auryo-2.5.4.AppImage &&
 mv Auryo-2.5.4.AppImage ~/AppImages/auryo
-
-wget https://download.kde.org/stable/kdenlive/21.08/linux/kdenlive-21.08.1-x86_64.appimage &&
-chmod +x kdenlive-20.12.3a-x86_64.appimage &&
-mv kdenlive-20.12.3a-x86_64.appimage ~/AppImages/kdenlive
 
 wget https://download.kde.org/stable/krita/4.4.8/krita-4.4.8-x86_64.appimage &&
 chmod +x krita-4.4.8-x86_64.appimage &&
