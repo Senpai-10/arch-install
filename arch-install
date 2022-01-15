@@ -240,7 +240,6 @@ mkdir -pv ~/Videos
 mkdir -pv ~/Screenshots
 mkdir -pv ~/mpv_screenshots
 mkdir -pv ~/AppImages
-mkdir -p ~/wm
 sudo mkdir -pv /usr/share/cmus/
 sudo mkdir -pv /usr/local/share/fonts
 
