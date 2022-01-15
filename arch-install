@@ -80,7 +80,7 @@ swapon /dev/${drive}1
 mkfs.ext4 /dev/${drive}2
 mount /dev/${drive}2 /mnt
 
-pacstrap /mnt base base-devel linux linux-firmware neovim
+pacstrap /mnt base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo -e "drive=$drive\n" > /mnt/arch-install-2
@@ -112,9 +112,8 @@ echo "127.0.0.1       localhost" >> /etc/hosts
 echo "::1             localhost" >> /etc/hosts
 echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
 echo "root:$root_password" | chpasswd
-pacman --noconfirm -S grub networkmanager network-manager-applet \
-  wireless_tools wpa_supplicant os-prober mtools dosfstools \
-  base-devel linux-headers
+pacman --noconfirm -Sy grub networkmanager network-manager-applet \
+  wireless_tools wpa_supplicant os-prober mtools dosfstools 
 grub-install --target=i386-pc /dev/$drive
 grub-mkconfig -o /boot/grub/grub.cfg
 pacman -S --noconfirm xorg-xwud \
@@ -156,7 +155,8 @@ pacman -S --noconfirm xorg-xwud \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
     slock jq dhcpcd pamixer which yarn yad vivaldi \
-    kde-applications kdenlive kate
+    kde-applications kdenlive kate gnome-weather gparted \
+		gtk4 gtop hwinfo 
 systemctl enable NetworkManager.service
 chsh -s $(which zsh)
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -226,6 +226,8 @@ yay -S --noconfirm icons-in-terminal
 yay -S --noconfirm inxi
 yay -S --noconfirm epson-inkjet-printer-escpr
 yay -S --noconfirm gromit-mpx
+yay -S --noconfirm tlauncher 
+yay -S --noconfirm vtop 
 
 git clone https://github.com/senpai-10/dotfiles .dotfiles && 
 cd .dotfiles
