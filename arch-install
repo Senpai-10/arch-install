@@ -251,6 +251,9 @@ sudo cp themes/cmus/*.theme /usr/share/cmus/
 sudo systemctl enable libvirtd --now
 sudo usermod -a -G libvirt $USER
 
+sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+sudo chmod a+rx /usr/local/bin/yt-dlp
+
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
