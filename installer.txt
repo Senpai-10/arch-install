@@ -1,0 +1,6 @@
+# installer notes
+
+./installer help message
+
+--help      Print this message
+--part-1    run part-1
