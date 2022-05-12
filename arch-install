@@ -135,8 +135,7 @@ pacman -S --noconfirm xorg-xwud \
     dmenu dnsmasq docker easytag emacs \
     fd feh fff ffmpegthumbnailer ffmpegthumbs \
     flameshot gimp gnome-calculator \
-    gnome-system-monitor highlight htop \
-    imwheel jgmenu kitty kmix \
+    highlight htop imwheel jgmenu kitty \
     lib32-libpulse libguestfs libpng12 libvirt \
     lxappearance lxappearance-obconf menumaker nautilus nemo neofetch \
     nitrogen nnn nodejs npm obconf onboard openbox \
@@ -154,9 +153,9 @@ pacman -S --noconfirm xorg-xwud \
     zip unzip unrar p7zip xdotool papirus-icon-theme  \
     ntfs-3g sxhkd zsh \
     arc-gtk-theme rsync firefox dash \
-    slock jq dhcpcd pamixer which yarn yad vivaldi \
-    kde-applications kdenlive kate gnome-weather gparted \
-		gtk4 gtop hwinfo tint2 cutefish dbeaver awesome
+    slock jq dhcpcd pamixer which yarn yad \
+    kdenlive kate gparted \
+		gtk4 gtop hwinfo tint2 dbeaver awesome picom libwacom
 systemctl enable NetworkManager.service
 chsh -s $(which zsh)
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -202,14 +201,12 @@ yay -S --noconfirm fontpreview-ueberzug-git
 yay -S --noconfirm google-chrome
 yay -S --noconfirm lf-bin
 yay -S --noconfirm ls-icons
-yay -S --noconfirm lxqt-build-tools-git
 yay -S --noconfirm mongodb-bin
 yay -S --noconfirm mongodb-tools-bin
 yay -S --noconfirm mongosh-bin
 yay -S --noconfirm nerd-fonts-complete
 yay -S --noconfirm noto-fonts-sc
 yay -S --noconfirm otf-symbola
-yay -S --noconfirm picom-ibhagwan-git
 yay -S --noconfirm polybar
 yay -S --noconfirm selectdefaultapplication-git
 yay -S --noconfirm spacefm
@@ -228,6 +225,8 @@ yay -S --noconfirm epson-inkjet-printer-escpr
 yay -S --noconfirm gromit-mpx
 yay -S --noconfirm tlauncher 
 yay -S --noconfirm vtop 
+yay -S --noconfirm xsetwacom
+yay -S --noconfirm pyinstaller
 
 git clone https://github.com/senpai-10/dotfiles .dotfiles && 
 cd .dotfiles
@@ -286,16 +285,14 @@ wget https://hyperbeam.com/download/linux &&
 chmod +x linux &&
 mv linux ~/AppImages/hyperbeam
 
-cd ~
-git clone https://github.com/siduck/st.git && cd st && sudo make install
+mkdir -pv ~/clone 
+cd ~/clone 
+
+git clone https://github.com/siduck/st.git && cd st && sudo make install ; cd ..
 # install dwm, dmenu, dwmblocks
-mkdir -pv ~/.wm && cd ~/.wm &&
-git clone https://github.com/Senpai-10/dwm.git && cd dwm && sudo make install &&
-cd ..  
-git clone https://github.com/Senpai-10/dmenu.git && cd dmenu && sudo make install &&
-cd ..
-git clone https://github.com/Senpai-10/dwmblocks.git && cd dwmblocks && sudo make install &&
-cd ~/
+git clone https://github.com/Senpai-10/dwm.git && cd dwm && sudo make install ; cd ..  
+git clone https://github.com/Senpai-10/dmenu.git && cd dmenu && sudo make install ; cd ..
+git clone https://github.com/Senpai-10/dwmblocks.git && cd dwmblocks && sudo make install ; cd ~/
 
 sudo sed -i '$ d' /etc/sudoers
 sudo echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
