@@ -89,7 +89,7 @@ echo -e "root_password=$root_password\n" >> /mnt/arch-install-2
 echo -e "username=$username\n" >> /mnt/arch-install-2
 echo -e "user_password=$user_password\n" >> /mnt/arch-install-2
 
-sed '1,/^#part2$/d' arch-install >> /mnt/arch-install-2
+sed '1,/^#part2$/d' arch-install.sh >> /mnt/arch-install-2
 chmod +x /mnt/arch-install-2
 arch-chroot /mnt ./arch-install-2
 exit
