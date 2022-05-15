@@ -240,6 +240,8 @@ mkdir -pv ~/Videos
 mkdir -pv ~/Screenshots
 mkdir -pv ~/mpv_screenshots
 mkdir -pv ~/AppImages
+mkdir -pv ~/clone 
+mkdir -pv ~/suckless
 sudo mkdir -pv /usr/share/cmus/
 sudo mkdir -pv /usr/local/share/fonts
 
@@ -286,8 +288,7 @@ wget https://hyperbeam.com/download/linux &&
 chmod +x linux &&
 mv linux ~/AppImages/hyperbeam
 
-mkdir -pv ~/clone 
-cd ~/clone 
+cd ~/suckless
 
 git clone https://github.com/siduck/st.git && cd st && sudo make install ; cd ..
 # install dwm, dmenu, dwmblocks
