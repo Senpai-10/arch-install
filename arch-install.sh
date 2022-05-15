@@ -227,6 +227,7 @@ yay -S --noconfirm tlauncher
 yay -S --noconfirm vtop 
 yay -S --noconfirm xsetwacom
 yay -S --noconfirm pyinstaller
+yay -S --noconfirm tabbed-git
 
 git clone https://github.com/senpai-10/dotfiles .dotfiles && 
 cd .dotfiles
