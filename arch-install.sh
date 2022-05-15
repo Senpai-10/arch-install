@@ -227,7 +227,6 @@ yay -S --noconfirm tlauncher
 yay -S --noconfirm vtop 
 yay -S --noconfirm xsetwacom
 yay -S --noconfirm pyinstaller
-yay -S --noconfirm tabbed-git
 
 git clone https://github.com/senpai-10/dotfiles .dotfiles && 
 cd .dotfiles
@@ -294,7 +293,8 @@ git clone https://github.com/siduck/st.git && cd st && sudo make install ; cd ..
 # install dwm, dmenu, dwmblocks
 git clone https://github.com/Senpai-10/dwm.git && cd dwm && sudo make install ; cd ..  
 git clone https://github.com/Senpai-10/dmenu.git && cd dmenu && sudo make install ; cd ..
-git clone https://github.com/Senpai-10/dwmblocks.git && cd dwmblocks && sudo make install ; cd ~/
+git clone https://github.com/Senpai-10/dwmblocks.git && cd dwmblocks && sudo make install ; cd ..
+git clone https://github.com/Senpai-10/tabbed.git && cd tabbed && sudo make install ; cd ~/
 
 sudo sed -i '$ d' /etc/sudoers
 sudo echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
