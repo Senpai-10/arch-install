@@ -15,7 +15,7 @@ class Menu:
         for i in range(len(self.__menu)):
             print(f"{i+1}. {self.__menu[i]}")
         
-        choice = int(input("index: "))
+        choice = int(input("\nchoice: "))
         
         if choice > len(self.__menu) or choice < 0:
             print("Index is out of bounds!")
