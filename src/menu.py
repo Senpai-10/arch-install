@@ -1,3 +1,5 @@
+from colors import bright_green
+
 class Menu:
     """
     usage:
@@ -13,7 +15,7 @@ class Menu:
     
     def __display(self):
         for i in range(len(self.__menu)):
-            print(f"{i+1}. {self.__menu[i]}")
+            print(f"[{bright_green(i+1)}] {self.__menu[i]}")
         
         choice = int(input("\nchoice: "))
         
