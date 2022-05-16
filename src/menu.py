@@ -3,7 +3,7 @@ from colors import bright_green
 class Menu:
     """
     usage:
-        let main_menu = Menu(["choice 1", "choice 2", "choice 3"])
+        main_menu = Menu(["choice 1", "choice 2", "choice 3"])
         
         print(f"choice: {main_menu.choice}")
     """
