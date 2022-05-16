@@ -10,4 +10,4 @@ build:
 	mv dist/installer .
 
 clean:
-	rm -rf .mypy_cache build dist src/__pycache__ main.spec
+	rm -rf .mypy_cache build dist `find . -type d -name __pycache__` main.spec
