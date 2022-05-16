@@ -3,7 +3,7 @@ from menu import Menu
 def main():
     print("===================[ Archlinux Installer ]===================")
     print("=                                                           =")
-    print("=        Author: senpai-10 <bmjfdrh@gmail.com>              =")
+    print("=        Author:         senpai-10 <bmjfdrh@gmail.com>      =")
     print("=        GitHub profile: https://github.com/senpai-10       =")
     print("=                                                           =")
     print("=============================================================\n")
