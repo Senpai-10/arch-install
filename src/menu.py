@@ -7,20 +7,20 @@ class Menu:
     """
     
     def __init__(self, menu):
-        self.menu = menu
+        self.__menu = menu
         self.choice = ""
-        self._display()
+        self.__display()
     
-    def _display(self):
-        for i in range(len(self.menu)):
-            print(f"{i+1}. {self.menu[i]}")
+    def __display(self):
+        for i in range(len(self.__menu)):
+            print(f"{i+1}. {self.__menu[i]}")
         
         choice = int(input("index: "))
         
-        if choice > len(self.menu) or choice < 0:
+        if choice > len(self.__menu) or choice < 0:
             print("Index is out of bounds!")
             exit(1)
         
         if choice < 1:
-            self.choice = self.menu[choice]
-        else: self.choice = self.menu[choice-1]
+            self.choice = self.__menu[choice]
+        else: self.choice = self.__menu[choice-1]
