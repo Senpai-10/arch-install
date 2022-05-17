@@ -10,7 +10,7 @@ def main() -> None:
     print("=                                                           =")
     print("=============================================================\n")
     
-    main_menu: str = Menu(["choice 1", "choice 2", "choice 3"]).choice
+    main_menu: str = Menu("Main Menu", ["choice 1", "choice 2", "choice 3"]).choice
     print(f"choice: {main_menu}")
     
     if main_menu == "choice 1":
