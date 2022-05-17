@@ -1,5 +1,4 @@
 from colors import bright_green
-import typing
 
 class Menu:
     """
