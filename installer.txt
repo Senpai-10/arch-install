@@ -1,6 +1,30 @@
 # installer notes
 
+# note collect all info before starting op
+
+# when every stage ends save all collected info in config file
+
 ./installer help message
 
 --help      Print this message
 --part-1    run part-1
+
+steps:
+
+install: archlinux-keyring
+
+get hostname
+get root password + retype
+
+get username 
+get user password + retype
+
+get partitioning scheme
+    mbr or gpt
+
+select drive (note: full name /dev/name)
+
+select fastest mirrors with reflector
+
+loadkeys us
+timedatectl set-ntp true
