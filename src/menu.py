@@ -1,4 +1,5 @@
 from colors import bright_green
+import typing
 
 class Menu:
     """
@@ -8,12 +9,12 @@ class Menu:
         print(f"choice: {main_menu.choice}")
     """
     
-    def __init__(self, menu):
-        self.__menu = menu
-        self.choice = ""
+    def __init__(self, menu: list[str]):
+        self.__menu: list[str] = menu
+        self.choice: str = ""
         self.__display()
     
-    def __display(self):
+    def __display(self) -> None:
         for i in range(len(self.__menu)):
             print(f"[{bright_green(i+1)}] {self.__menu[i]}")
         
@@ -26,3 +27,4 @@ class Menu:
         if choice < 1:
             self.choice = self.__menu[choice]
         else: self.choice = self.__menu[choice-1]
+        

@@ -1,6 +1,6 @@
 from menu import Menu
 
-def main():
+def main() -> None:
     print("===================[ Archlinux Installer ]===================")
     print("=                                                           =")
     print("=        Author:         senpai-10 <bmjfdrh@gmail.com>      =")
@@ -8,7 +8,7 @@ def main():
     print("=                                                           =")
     print("=============================================================\n")
     
-    main_menu = Menu(["choice 1", "choice 2", "choice 3"]).choice
+    main_menu: str = Menu(["choice 1", "choice 2", "choice 3"]).choice
     print(f"choice: {main_menu}")
     
     if main_menu == "choice 1":
