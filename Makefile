@@ -5,7 +5,7 @@
 all: clean build
 
 build:
-	./install_requirements.sh
+	./install_build_requirements.sh
 	@pyinstaller src/main.py --onefile -n installer
 	mv dist/installer .
 
