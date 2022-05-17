@@ -1,19 +1,23 @@
-from colors import bright_green
+from colors import bright_green, bright_yellow
 
 class Menu:
     """
     usage:
-        main_menu = Menu(["choice 1", "choice 2", "choice 3"])
+        main_menu = Menu("title", ["choice 1", "choice 2", "choice 3"])
         
         print(f"choice: {main_menu.choice}")
     """
     
-    def __init__(self, menu: list[str]):
+    def __init__(self,  title: str, menu: list[str]):
+        self.__title = title
         self.__menu: list[str] = menu
         self.choice: str = ""
         self.__display()
     
     def __display(self) -> None:
+        print("-- " + bright_yellow(f"{self.__title}") + " --")
+        print()
+        
         for i in range(len(self.__menu)):
             print(f"[{bright_green(i+1)}] {self.__menu[i]}")
         
