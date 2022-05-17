@@ -1,6 +1,8 @@
 from menu import Menu
+from utils.clear_screen import clear
 
 def main() -> None:
+    clear()
     print("===================[ Archlinux Installer ]===================")
     print("=                                                           =")
     print("=        Author:         senpai-10 <bmjfdrh@gmail.com>      =")
