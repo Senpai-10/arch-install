@@ -229,8 +229,11 @@ yay -S --noconfirm xsetwacom
 yay -S --noconfirm pyinstaller
 yay -S --noconfirm smenu
 
-git clone https://github.com/senpai-10/dotfiles .dotfiles && 
-cd .dotfiles
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+git clone https://github.com/senpai-10/dotfiles ~/.dotfiles && 
+cd ~/.dotfiles
 
 mkdir -pv ~/Documents
 mkdir -pv ~/Pictures
