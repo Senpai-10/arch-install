@@ -155,7 +155,7 @@ pacman -S --noconfirm xorg-xwud \
     arc-gtk-theme rsync firefox dash \
     slock jq dhcpcd pamixer which yarn yad \
     kdenlive kate gparted \
-		gtk4 gtop hwinfo tint2 dbeaver awesome picom libwacom eog
+	gtk4 gtop hwinfo tint2 dbeaver awesome picom libwacom eog github-cli
 systemctl enable NetworkManager.service
 chsh -s $(which zsh)
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
