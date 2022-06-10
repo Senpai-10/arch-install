@@ -113,7 +113,7 @@ echo "::1             localhost" >> /etc/hosts
 echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
 echo "root:$root_password" | chpasswd
 pacman --noconfirm -Sy grub networkmanager network-manager-applet \
-  wireless_tools wpa_supplicant os-prober mtools dosfstools 
+  wireless_tools wpa_supplicant os-prober mtools dosfstools
 grub-install --target=i386-pc /dev/$drive
 grub-mkconfig -o /boot/grub/grub.cfg
 pacman -S --noconfirm xorg-xwud \
@@ -179,8 +179,8 @@ clear_screen () {
 }
 clear_screen
 cd $HOME
-# clone dotfiles and rename to .dotfiles 
-# remove old arch script and use it just for backups and copying dotfiles 
+# clone dotfiles and rename to .dotfiles
+# remove old arch script and use it just for backups and copying dotfiles
 sed -i '/arch/d' .bash_profile
 sed -i '/arch/d' .zsh_profile
 chsh -s $(which zsh)
@@ -218,13 +218,13 @@ yay -S --noconfirm ttf-ms-fonts
 yay -S --noconfirm pnpm-bin
 yay -S --noconfirm betterdiscord-installer-bin
 yay -S --noconfirm snapd
-yay -S --noconfirm pamac-all 
+yay -S --noconfirm pamac-all
 yay -S --noconfirm icons-in-terminal
 yay -S --noconfirm inxi
 yay -S --noconfirm epson-inkjet-printer-escpr
 yay -S --noconfirm gromit-mpx
-yay -S --noconfirm tlauncher 
-yay -S --noconfirm vtop 
+yay -S --noconfirm tlauncher
+yay -S --noconfirm vtop
 yay -S --noconfirm xsetwacom
 yay -S --noconfirm pyinstaller
 yay -S --noconfirm smenu
@@ -232,7 +232,7 @@ yay -S --noconfirm smenu
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-git clone https://github.com/senpai-10/dotfiles ~/.dotfiles && 
+git clone https://github.com/senpai-10/dotfiles ~/.dotfiles &&
 cd ~/.dotfiles
 
 mkdir -pv ~/Documents
@@ -243,7 +243,7 @@ mkdir -pv ~/Videos
 mkdir -pv ~/Screenshots
 mkdir -pv ~/mpv_screenshots
 mkdir -pv ~/AppImages
-mkdir -pv ~/clone 
+mkdir -pv ~/clone
 mkdir -pv ~/suckless
 sudo mkdir -pv /usr/share/cmus/
 sudo mkdir -pv /usr/local/share/fonts
@@ -291,11 +291,15 @@ wget https://hyperbeam.com/download/linux &&
 chmod +x linux &&
 mv linux ~/AppImages/hyperbeam
 
+wget https://github.com/notable/notable/releases/download/v1.8.4/Notable-1.8.4.AppImage &&
+chmod +x Notable-1.8.4.AppImage &&
+mv Notable-1.8.4.AppImage ~/AppImages/notable
+
 cd ~/suckless
 
 git clone https://github.com/siduck/st.git && cd st && sudo make install ; cd ..
 # install dwm, dmenu, dwmblocks
-git clone https://github.com/Senpai-10/dwm.git && cd dwm && sudo make install ; cd ..  
+git clone https://github.com/Senpai-10/dwm.git && cd dwm && sudo make install ; cd ..
 git clone https://github.com/Senpai-10/dmenu.git && cd dmenu && sudo make install ; cd ..
 git clone https://github.com/Senpai-10/dwmblocks.git && cd dwmblocks && sudo make install ; cd ..
 git clone https://github.com/Senpai-10/tabbed.git && cd tabbed && sudo make install ; cd ~/
