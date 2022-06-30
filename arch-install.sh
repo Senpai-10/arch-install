@@ -229,6 +229,7 @@ yay -S --noconfirm xsetwacom
 yay -S --noconfirm pyinstaller
 yay -S --noconfirm smenu
 yay -S --noconfirm notion-app
+yay -S --noconfirm discover-overlay
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
