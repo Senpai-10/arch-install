@@ -297,6 +297,10 @@ wget https://github.com/notable/notable/releases/download/v1.8.4/Notable-1.8.4.A
 chmod +x Notable-1.8.4.AppImage &&
 mv Notable-1.8.4.AppImage ~/AppImages/notable
 
+cd /tmp 
+
+git clone https://github.com/Senpai-10/cmus-rpc.git && cd cmus-rpc && make install; cd ~/
+
 cd ~/suckless
 
 git clone https://github.com/siduck/st.git && cd st && sudo make install ; cd ..
