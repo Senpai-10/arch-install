@@ -5,6 +5,7 @@ pub enum Partitioning {
 }
 
 impl Partitioning {
+    #[allow(dead_code)]
     pub fn as_str(&self) -> &'static str {
         match self {
             Partitioning::Mbr => "mbr",

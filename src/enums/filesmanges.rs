@@ -5,6 +5,7 @@ pub enum FilesManages {
 }
 
 impl FilesManages {
+    #[allow(dead_code)]
     pub fn as_str(&self) -> &'static str {
         match self {
             FilesManages::Nemo => "nemo",
