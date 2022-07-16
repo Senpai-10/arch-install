@@ -252,7 +252,7 @@ sudo mkdir -pv /usr/local/share/fonts
 
 cp -rfv dotfiles/.config ~/
 cp -av dotfiles/home/. ~/
-sudo cp fonts/* ~/.local/share/fonts/
+cp fonts/* ~/.local/share/fonts/
 sudo cp themes/cmus/*.theme /usr/share/cmus/
 
 sudo systemctl enable libvirtd --now
@@ -300,10 +300,6 @@ mv Notable-1.8.4.AppImage ~/AppImages/notable
 cd /tmp
 
 git clone https://github.com/Senpai-10/cmus-rpc.git && cd cmus-rpc && make install; cd ~/
-
-systemctl --user daemon-reload
-
-systemctl --user enable cmus-rpc
 
 cd ~/suckless
 
