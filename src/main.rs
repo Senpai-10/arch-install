@@ -4,5 +4,5 @@ mod enums;
 use config::Config;
 
 fn main() {
-    println!("config: {}", Config::get().files_manager.as_str());
+    println!("config: {}", Config::get().partitioning.as_str());
 }
