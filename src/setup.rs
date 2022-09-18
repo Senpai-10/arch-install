@@ -40,6 +40,7 @@ pub fn get_settings() -> settings::Settings {
         .interact().unwrap();
 
     settings::Settings {
+        // system
         hostname: hostname.trim().to_owned(),
         root_password: root_password.trim().to_owned(),
         username: username.trim().to_owned(),
@@ -47,8 +48,9 @@ pub fn get_settings() -> settings::Settings {
         timezone: TIMEZONES[timezone_index].to_owned(),
         keymap: String::from("us"),
         partitioning_scheme: PARTITIONING_SCHEMES[partitioning_schemes_index].to_owned(),
-        drive: String::from("/dev/sda"),
+        drive: drive.trim().to_owned(),
 
+        // user packages
         files_manager: String::from("nemo"),
     }
 }
