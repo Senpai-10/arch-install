@@ -1,8 +1,8 @@
-type static_str_vec = &'static [&'static str];
+type StaticStrVec = &'static [&'static str];
 
-pub const PARTITIONING_SCHEMES: static_str_vec = &["mbr", "gpt"];
+pub const PARTITIONING_SCHEMES: StaticStrVec = &["mbr", "gpt"];
 
-pub const TIMEZONES: static_str_vec = &[
+pub const TIMEZONES: StaticStrVec = &[
             "Africa/Abidjan",
             "Africa/Accra",
             "Africa/Addis_Ababa",
