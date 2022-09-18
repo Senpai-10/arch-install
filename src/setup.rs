@@ -1,5 +1,6 @@
 use crate::settings;
 use crate::constants::{TIMEZONES, PARTITIONING_SCHEMES};
+use std::process::Command;
 
 use dialoguer::theme::ColorfulTheme;
 
@@ -27,6 +28,16 @@ pub fn get_settings() -> settings::Settings {
     let timezone_index = dialoguer::FuzzySelect::with_theme(&default_theme).with_prompt("Select timezone").default(0).items(&TIMEZONES).interact().unwrap();
 
     let partitioning_schemes_index = dialoguer::FuzzySelect::with_theme(&default_theme).with_prompt("Select partitioning scheme").default(0).items(&PARTITIONING_SCHEMES).interact().unwrap();
+
+    let lsblk_command = Command::new("lsblk")
+        .output()
+        .expect("lsblk command failed to start");
+
+    println!("stdout: {}", String::from_utf8_lossy(&lsblk_command.stdout));
+
+    let drive: String = dialoguer::Input::with_theme(&default_theme)
+        .with_prompt("enter installation drive (example: /dev/sda)")
+        .interact().unwrap();
 
     settings::Settings {
         hostname: hostname.trim().to_owned(),
