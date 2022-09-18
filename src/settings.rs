@@ -6,7 +6,7 @@ pub struct Settings {
     pub timezone: String,
     pub keymap: String,
 
-    pub partition_table_format: String,
+    pub partitioning_scheme: String,
     pub drive: String,
     
     // user apps
@@ -28,7 +28,7 @@ impl Settings {
                     1. mbr
                     2. gpt
             */
-            partition_table_format: String::from("mbr"),
+            partitioning_scheme: String::from("mbr"),
 
             // Main installation drive name
             // Example: sda without '/dev/'
