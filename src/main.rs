@@ -30,5 +30,5 @@ fn main() {
         }
     }
 
-    println!("after: gs{}", settings.hostname);
+    println!("after: {}", settings.hostname);
 }
