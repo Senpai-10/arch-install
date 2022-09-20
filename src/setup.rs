@@ -22,9 +22,17 @@ pub fn get_settings<'a>(theme: &'a dyn dialoguer::theme::Theme) -> settings::Set
         .with_confirmation("Confirm password", "Passwords mismatching")
         .interact().unwrap();
 
-    let timezone_index = dialoguer::FuzzySelect::with_theme(theme).with_prompt("Select timezone").default(0).items(&TIMEZONES).interact().unwrap();
+    let timezone_index = dialoguer::FuzzySelect::with_theme(theme)
+        .with_prompt("Select timezone")
+        .default(0)
+        .items(&TIMEZONES)
+        .interact().unwrap();
 
-    let partitioning_schemes_index = dialoguer::FuzzySelect::with_theme(theme).with_prompt("Select partitioning scheme").default(0).items(&PARTITIONING_SCHEMES).interact().unwrap();
+    let partitioning_schemes_index = dialoguer::FuzzySelect::with_theme(theme)
+        .with_prompt("Select partitioning scheme")
+        .default(0)
+        .items(&PARTITIONING_SCHEMES)
+        .interact().unwrap();
 
     let lsblk_command = Command::new("lsblk")
         .output()
