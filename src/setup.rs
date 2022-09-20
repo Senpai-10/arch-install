@@ -38,7 +38,7 @@ pub fn get_settings<'a>(theme: &'a dyn dialoguer::theme::Theme) -> settings::Set
         .output()
         .expect("lsblk command failed to start");
 
-    println!("stdout: {}", String::from_utf8_lossy(&lsblk_command.stdout));
+    println!("{}", String::from_utf8_lossy(&lsblk_command.stdout));
 
     let drive: String = dialoguer::Input::with_theme(theme)
         .with_prompt("enter installation drive (example: /dev/sda)")
