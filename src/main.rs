@@ -29,6 +29,4 @@ fn main() {
             break;
         }
     }
-
-    println!("after: {}", settings.hostname);
 }
