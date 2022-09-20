@@ -1,8 +1,8 @@
-exe_name=installer
+exe_name=arch-installer
 
 build: clean
-	cargo build --release
-	cp ./target/release/${exe_name} .
+	cargo build --release --verbose
+	cp ./target/release/${exe_name} ./${exe_name}-testing
 
 clean:
 	cargo clean
