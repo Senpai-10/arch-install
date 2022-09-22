@@ -52,6 +52,7 @@ fn main() {
     info!("Checking internet connection");
     if is_online() == false {
         error!("Not connected to the internet.");
+        exit(1);
     }
     
     loop {

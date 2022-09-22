@@ -10,8 +10,9 @@ pub fn is_root() -> bool {
 }
 
 pub fn is_online() -> bool {
-    let status = std::process::Command::new("ping")
-        .args(["-c1", "8.8.8.8", "&>/dev/null"])
+    let status = std::process::Command::new("sh")
+        .arg("-c")
+        .arg("ping -c1 8.8.8.8 &>/dev/null")
         .status()
         .expect("failed to execute `ping` command");
 
