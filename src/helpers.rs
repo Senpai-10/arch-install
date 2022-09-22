@@ -32,9 +32,11 @@ pub mod pacman {
     }
 
     /// Execute `pacman --noconfirm -S {package}`
-    pub fn install(package: &str) -> ExitStatus {
+    pub fn install(packages: Vec<&str>) -> ExitStatus {
         let status = Command::new("pacman")
-            .args(["--noconfirm", "-S", package]).status().expect("failed to install package");
+            .arg("--noconfirm")
+            .arg("-S")
+            .args(packages).status().expect("failed to install package");
     
         status
     }
