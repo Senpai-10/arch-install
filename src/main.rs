@@ -14,7 +14,7 @@ mod helpers;
 
 use constants::{TIMEZONES, PARTITIONING_SCHEMES};
 use constants::metadata::{VERSION, AUTHORS, DESCRIPTION, REPOSITORY};
-use helpers::is_root;
+use helpers::{is_root, is_online};
 use std::process::Command;
 use setup::setup;
 
@@ -47,6 +47,11 @@ fn main() {
     if is_root() == false {
         error!("This script require root permissions :(");
         exit(1);
+    }
+
+    info!("Checking internet connection");
+    if is_online() == false {
+        error!("Not connected to the internet.");
     }
     
     loop {
