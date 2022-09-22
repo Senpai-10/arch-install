@@ -6,3 +6,8 @@ build: clean
 
 clean:
 	cargo clean
+
+upload:
+	git add "${exe_name}-testing"
+	git commit -m "commit ${exe_name}-testing for testing"
+	git push
