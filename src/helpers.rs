@@ -36,7 +36,8 @@ pub mod pacman {
         let status = Command::new("pacman")
             .arg("--noconfirm")
             .arg("-S")
-            .args(packages).status().expect("failed to install package");
+            .args(packages)
+            .status().expect("failed to install package");
     
         status
     }
