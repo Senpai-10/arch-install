@@ -1,19 +1,14 @@
 use crate::helpers::pacman;
 use std::process::{Command, ExitStatus};
-use colored::{self, Colorize};
 
 /// Setup installation
 pub fn setup() {
-    println!(
-        "{}",
-        "Selecting the fastest mirrors".bright_green()
-    );
-    
+    info!("Selecting the fastest mirrors");
     if !update_mirrorlist().success() {
-        println!("{}", "Failed to update mirrorlist".bright_red());
+        error!("Failed to update mirrorlist");
     }
 
-    println!("refreshing pacman database!");
+    info!("Refreshing pacman database!");
     pacman::refresh_database();
 
     // pacman::install("archlinux-keyring");
@@ -25,7 +20,8 @@ fn update_mirrorlist() -> ExitStatus {
         .args(["--latest", "100",
                 "--sort", "rate",
                 "--save", "/etc/pacman.d/mirrorlist", 
-                "--protocol", "https"])
+                "--protocol", "https",
+                "--verbose"])
         .status().unwrap();
     
     status
