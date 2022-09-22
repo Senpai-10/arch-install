@@ -1,17 +1,30 @@
-use crate::helpers::pacman;
+use crate::{helpers::pacman, settings::Settings};
 use std::process::{Command, ExitStatus};
 
 /// Setup installation
-pub fn setup() {
+pub fn setup(settings: Settings) {
     info!("Selecting the fastest mirrors");
     if !update_mirrorlist().success() {
         error!("Failed to update mirrorlist");
     }
 
+    pacman::enable_multilib();
+    pacman::set_parallel_downloads(15);
+
     info!("Refreshing pacman database!");
     pacman::refresh_database();
 
-    // pacman::install("archlinux-keyring");
+    // loadkeys us
+    // timedatectl set-ntp true
+
+    info!("Set the console keyboard layout");
+    Command::new("loadkeys")
+        .arg(settings.keymap);
+
+    info!("Update the system clock");
+    Command::new("timedatectl")
+        .args(["set-ntp", "true"]);
+        
 }
 
 fn update_mirrorlist() -> ExitStatus {
