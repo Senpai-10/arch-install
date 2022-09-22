@@ -9,6 +9,15 @@ pub fn is_root() -> bool {
     output == 0
 }
 
+pub fn is_online() -> bool {
+    let status = std::process::Command::new("ping")
+        .args(["-c1", "8.8.8.8", "&>/dev/null"])
+        .status()
+        .expect("failed to execute `ping` command");
+
+    status.success()
+}
+
 pub mod pacman {
     use std::process::{Command, ExitStatus};
 
