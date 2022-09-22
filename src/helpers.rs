@@ -12,7 +12,7 @@ pub fn is_root() -> bool {
 pub mod pacman {
     use std::process::{Command, ExitStatus};
 
-    /// execute `pacman -Sy`
+    /// Execute `pacman -Sy`
     pub fn refresh_database() -> ExitStatus {
         let status = Command::new("pacman")
             .args(["-Sy"])
@@ -21,6 +21,7 @@ pub mod pacman {
         status
     }
 
+    /// Execute `pacman --noconfirm -S {package}`
     pub fn install(package: &str) -> ExitStatus {
         let status = Command::new("pacman")
             .args(["--noconfirm", "-S", package]).status().expect("failed to install package");
