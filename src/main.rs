@@ -14,7 +14,7 @@ mod helpers;
 
 use constants::{TIMEZONES, PARTITIONING_SCHEMES};
 use constants::metadata::{VERSION, AUTHORS, DESCRIPTION, REPOSITORY};
-use helpers::{is_root, is_online};
+use helpers::{pacman, is_root, is_online};
 use std::process::Command;
 use setup::setup;
 
@@ -49,12 +49,11 @@ fn main() {
         exit(1);
     }
 
-    info!("Checking internet connection");
     if is_online() == false {
         error!("Not connected to the internet.");
         exit(1);
     }
-    
+
     loop {
         settings = get_settings(&theme);
 
