@@ -7,16 +7,16 @@ extern crate log;
 extern crate rust_logger;
 
 mod settings;
-mod setup;
+mod pre_installation;
 mod constants;
 mod censor_password;
 mod helpers;
 
 use constants::{TIMEZONES, PARTITIONING_SCHEMES};
 use constants::metadata::{VERSION, AUTHORS, DESCRIPTION, REPOSITORY};
-use helpers::{pacman, is_root, is_online};
+use helpers::{is_root, is_online};
 use std::process::Command;
-use setup::setup;
+use pre_installation::pre_installation;
 
 use std::process::exit;
 use dialoguer::Confirm;
@@ -70,7 +70,7 @@ fn main() {
         }
     }
 
-    setup(settings);
+    pre_installation(settings);
 }
 
 pub fn get_settings<'a>(theme: &'a dyn dialoguer::theme::Theme) -> settings::Settings {
@@ -114,6 +114,24 @@ pub fn get_settings<'a>(theme: &'a dyn dialoguer::theme::Theme) -> settings::Set
     let drive: String = dialoguer::Input::with_theme(theme)
         .with_prompt("enter installation drive (example: /dev/sda)")
         .interact().unwrap();
+
+
+    /*
+        TODO
+        
+        ask "do you want root and home seperate"
+
+            if root and home seperate 
+                ask for root size, and home size in GB
+            if not seperate 
+                ask for root size
+            
+                Note: check for drive capacity
+
+        ask "do you want a swap file or partition"
+
+            in both cases ask for size
+    */
 
     settings::Settings {
         // system
