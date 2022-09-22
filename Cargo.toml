@@ -1,10 +1,14 @@
 [package]
 name = "arch-installer"
+authors = ["abdalrzag eisa <bmjfdrh@gmail.com>"]
+description = "Simple arch install script."
+repository = "https://github.com/Senpai-10/arch-install"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+colored = "2.0.0"
 dialoguer = { version = "0.10.2", features = ["fuzzy-select"] }
 prettytable-rs = "0.9.0"
