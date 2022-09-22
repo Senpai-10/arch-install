@@ -14,9 +14,6 @@ pub fn setup(settings: Settings) {
     info!("Refreshing pacman database!");
     pacman::refresh_database();
 
-    // loadkeys us
-    // timedatectl set-ntp true
-
     info!("Set the console keyboard layout");
     Command::new("loadkeys")
         .arg(settings.keymap);
