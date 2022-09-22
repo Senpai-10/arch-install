@@ -1,3 +1,5 @@
+// https://wiki.archlinux.org/title/Installation_guide
+
 #[macro_use] extern crate prettytable;
 
 #[macro_use]
@@ -63,7 +65,7 @@ fn main() {
         }
     }
 
-    setup();
+    setup(settings);
 }
 
 pub fn get_settings<'a>(theme: &'a dyn dialoguer::theme::Theme) -> settings::Settings {
