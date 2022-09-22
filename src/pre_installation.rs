@@ -1,8 +1,22 @@
 use crate::{helpers::pacman, settings::Settings};
 use std::process::{Command, ExitStatus};
 
-/// Setup installation
-pub fn setup(settings: Settings) {
+/**
+1. **pre installation**
+ 
+    Set the console keyboard layout
+
+    Update the system clock
+ 
+    Partition the disks
+ 
+        Example layouts
+ 
+    Format the partitions
+ 
+    Mount the file systems
+*/
+pub fn pre_installation(settings: Settings) {
     info!("Selecting the fastest mirrors");
     if !update_mirrorlist().success() {
         error!("Failed to update mirrorlist");
@@ -21,7 +35,18 @@ pub fn setup(settings: Settings) {
     info!("Update the system clock");
     Command::new("timedatectl")
         .args(["set-ntp", "true"]);
-        
+    
+    let mut fdisk_commmand = String::new();
+    
+    // 'o' create a new empty Dos partition table
+    if settings.partitioning_scheme == "mbr" {
+        fdisk_commmand.push_str("o\n");
+    }
+
+    if settings.partitioning_scheme == "gpt" {
+        fdisk_commmand.push_str("g\n");
+    }
+
 }
 
 fn update_mirrorlist() -> ExitStatus {
