@@ -5,17 +5,17 @@ use std::io::{Read, Write};
 
 /**
 1. **pre installation**
- 
+
     Set the console keyboard layout
 
     Update the system clock
- 
+
     Partition the disks
- 
+
         Example layouts
- 
+
     Format the partitions
- 
+
     Mount the file systems
 */
 pub fn pre_installation(settings: Settings) {
@@ -37,14 +37,14 @@ pub fn pre_installation(settings: Settings) {
     info!("Update the system clock");
     Command::new("timedatectl")
         .args(["set-ntp", "true"]);
-    
+
 
     /*                                              Layouts
 
                                                 UEFI with GPT
 
                 Mount point	    Partition	                Partition type	        Suggested size
-        
+
         /dev/1  /mnt/boot1	    /dev/efi_system_partition	EFI system partition	At least 300 MiB
         /dev/2  [SWAP]	        /dev/swap_partition	        Linux swap	            More than 512 MiB
         /dev/3  /mnt	        /dev/root_partition	        Linux x86-64 root (/)	Remainder of the device
@@ -59,7 +59,7 @@ pub fn pre_installation(settings: Settings) {
     */
 
     let mut fdisk_commmand = String::new();
-    
+
     // 'o' create a new empty Dos partition table
     if settings.partitioning_scheme == "mbr" {
         fdisk_commmand.push_str("o\n");
@@ -105,7 +105,7 @@ pub fn pre_installation(settings: Settings) {
     fdisk_commmand.push_str("\n");
     fdisk_commmand.push_str("\n");
     fdisk_commmand.push_str("\n");
-    
+
     // write to disk
     fdisk_commmand.push_str("w");
 
@@ -139,8 +139,8 @@ pub fn pre_installation(settings: Settings) {
         efi_system_partition.push('1');
         swap_partition.push('2');
         root_partition.push('3');
-    } 
-    
+    }
+
     if settings.partitioning_scheme == "gpt" && settings.swap_type == "file" {
         efi_system_partition.push('1');
         root_partition.push('2');
@@ -154,7 +154,7 @@ pub fn pre_installation(settings: Settings) {
     if settings.partitioning_scheme == "mbr" && settings.swap_type == "file" {
         root_partition.push('1');
     }
-    
+
     Command::new("mkfs.ext4")
         .arg(&root_partition)
         .status().unwrap();
@@ -192,7 +192,7 @@ pub fn pre_installation(settings: Settings) {
             .arg("/mnt/boot")
             .status().unwrap();
     }
-    
+
 }
 
 fn update_mirrorlist() -> ExitStatus {
@@ -200,10 +200,10 @@ fn update_mirrorlist() -> ExitStatus {
     let status = Command::new("reflector")
         .args(["--latest", "100",
                 "--sort", "rate",
-                "--save", "/etc/pacman.d/mirrorlist", 
+                "--save", "/etc/pacman.d/mirrorlist",
                 "--protocol", "https",
                 "--verbose"])
         .status().unwrap();
-    
+
     status
 }
