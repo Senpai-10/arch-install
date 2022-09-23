@@ -132,18 +132,17 @@ pub fn pre_installation(settings: Settings) {
     println!("output: {}", helpers::convert_vector_of_bytes_to_string(cmd_fdisk.wait_with_output().unwrap().stdout));
 
     let mut root_partition = settings.drive.clone();
-    let mut boot_partition = settings.drive.clone();
+    let mut efi_system_partition = settings.drive.clone();
     let mut swap_partition = settings.drive.clone();
 
-
     if settings.partitioning_scheme == "gpt" && settings.swap_type == "partition" {
-        boot_partition.push('1');
+        efi_system_partition.push('1');
         swap_partition.push('2');
         root_partition.push('3');
     } 
     
     if settings.partitioning_scheme == "gpt" && settings.swap_type == "file" {
-        boot_partition.push('1');
+        efi_system_partition.push('1');
         root_partition.push('2');
     }
 
@@ -155,7 +154,45 @@ pub fn pre_installation(settings: Settings) {
     if settings.partitioning_scheme == "mbr" && settings.swap_type == "file" {
         root_partition.push('1');
     }
+    
+    Command::new("mkfs.ext4")
+        .arg(&root_partition)
+        .status().unwrap();
 
+    if settings.swap_type == "partition" {
+        info!("mkswap {swap_partition}");
+        Command::new("mkswap")
+            .arg(&swap_partition)
+            .status().unwrap();
+
+        info!("swapon {swap_partition}");
+        Command::new("swapon")
+            .arg(&swap_partition)
+            .status().unwrap();
+    }
+
+    if settings.partitioning_scheme == "gpt" {
+        Command::new("mkfs.fat")
+            .arg("-F")
+            .arg("32")
+            .arg(&efi_system_partition)
+            .status().unwrap();
+    }
+
+    info!("Mount the file systems");
+    Command::new("mount")
+        .arg(&root_partition)
+        .arg("/mnt")
+        .status().unwrap();
+
+    if settings.partitioning_scheme == "gpt" {
+        Command::new("mount")
+            .arg("--mkdir")
+            .arg(&efi_system_partition)
+            .arg("/mnt/boot")
+            .status().unwrap();
+    }
+    
 }
 
 fn update_mirrorlist() -> ExitStatus {
