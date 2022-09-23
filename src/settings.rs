@@ -13,6 +13,10 @@ pub struct Settings {
 
     pub partitioning_scheme: String,
     pub drive: String,
+    pub swap_type: String,
+    /// <N>GB
+    /// 4GB
+    pub swap_size: String,
     
     // user apps
     pub files_manager: String,
@@ -38,6 +42,8 @@ impl Settings {
         system_table.add_row(row!["keymap", self.keymap]);
         system_table.add_row(row!["partitioning scheme", self.partitioning_scheme]);
         system_table.add_row(row!["drive", self.drive]);
+        system_table.add_row(row!["swap_type", self.swap_type]);
+        system_table.add_row(row!["swap_size", self.swap_size]);
 
         user_table.set_titles(row!["Setting", "Value"]);
 
