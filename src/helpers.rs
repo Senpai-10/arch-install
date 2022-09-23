@@ -78,7 +78,7 @@ pub mod pacman {
     }
 }
 
-fn convert_vector_of_bytes_to_string(bytes: Vec<u8>) -> String {
+pub fn convert_vector_of_bytes_to_string(bytes: Vec<u8>) -> String {
     let mut s = String::from_utf8(bytes).unwrap();
 
     if s.ends_with('\n') {
