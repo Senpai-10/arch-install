@@ -7,6 +7,8 @@ pub mod metadata {
     pub const DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
 }
 
+pub const SWAP_TYPES: StaticStrVec = &["partition", "file"];
+
 pub const PARTITIONING_SCHEMES: StaticStrVec = &["mbr", "gpt"];
 
 pub const TIMEZONES: StaticStrVec = &[
