@@ -48,14 +48,14 @@ pub fn get_settings<'a>(theme: &'a dyn dialoguer::theme::Theme) -> Settings {
 
     /*
         TODO
-        
+
         ask "do you want root and home seperate"
 
-            if root and home seperate 
+            if root and home seperate
                 ask for root size, and home size in GB
-            if not seperate 
+            if not seperate
                 ask for root size
-            
+
                 Note: check for drive capacity
 
         ask "do you want a swap file or partition"
@@ -63,7 +63,7 @@ pub fn get_settings<'a>(theme: &'a dyn dialoguer::theme::Theme) -> Settings {
             in both cases ask for size
     */
 
-    
+
     let swap_type_index = dialoguer::FuzzySelect::with_theme(theme)
         .with_prompt("Select swap type")
         .default(0)

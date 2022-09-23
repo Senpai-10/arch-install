@@ -38,14 +38,14 @@ pub mod pacman {
             .arg("-S")
             .args(packages)
             .status().expect("failed to install package");
-    
+
         status
     }
 
     /// pacman config
-    /// 
-    /// Uncomment `ParallelDownloads`, and change number 
-    /// 
+    ///
+    /// Uncomment `ParallelDownloads`, and change number
+    ///
     /// file: `/etc/pacman.conf`
     pub fn set_parallel_downloads(n: usize) {
         // put the number in the regex
@@ -53,7 +53,7 @@ pub mod pacman {
 
         Command::new("sed")
         .args([
-            "-i", 
+            "-i",
             &sed_regex,
             "/etc/pacman.conf"])
         .status().unwrap();
@@ -62,14 +62,14 @@ pub mod pacman {
     }
 
     /// pacman config
-    /// 
+    ///
     /// Uncomment [multilib], and 'Include' line
-    /// 
+    ///
     /// file: `/etc/pacman.conf`
     pub fn enable_multilib() {
         Command::new("sed")
         .args([
-            "-i", 
+            "-i",
             "\"/\\[multilib\\]/,/Include/\"'s/^#//'",
             "/etc/pacman.conf"])
         .status().unwrap();
