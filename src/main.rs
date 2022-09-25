@@ -7,7 +7,7 @@ extern crate log;
 extern crate rust_logger;
 
 mod settings;
-mod pre_installation;
+mod installation_parts;
 mod constants;
 mod censor_password;
 mod helpers;
@@ -16,7 +16,7 @@ mod get_settings;
 use get_settings::get_settings;
 use constants::metadata::{VERSION, AUTHORS, DESCRIPTION, REPOSITORY};
 use helpers::{is_root, is_online};
-use pre_installation::pre_installation;
+use installation_parts::pre_installation::pre_installation;
 
 use std::process::exit;
 use dialoguer::Confirm;
