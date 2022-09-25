@@ -57,7 +57,6 @@ pub mod pacman {
             &sed_regex,
             "/etc/pacman.conf"])
         .status().unwrap();
-
     }
 
     /// pacman config
@@ -72,7 +71,6 @@ pub mod pacman {
             "\"/\\[multilib\\]/,/Include/\"'s/^#//'",
             "/etc/pacman.conf"])
         .status().unwrap();
-
     }
 }
 
