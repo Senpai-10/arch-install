@@ -19,13 +19,20 @@ use std::io::{Read, Write};
     Mount the file systems
 */
 pub fn pre_installation(settings: Settings) {
+    // TODO: uncomment this code!
     // info!("Selecting the fastest mirrors");
     // if !update_mirrorlist().success() {
     //     error!("Failed to update mirrorlist");
     // }
 
+    const PARALLEL_DOWNLOADS: usize = 15;
+
     pacman::enable_multilib();
-    pacman::set_parallel_downloads(15);
+    info!("pacman.conf: multilib enabled");
+
+    pacman::set_parallel_downloads(PARALLEL_DOWNLOADS);
+
+    info!("pacman.conf: ParallelDownloads = {PARALLEL_DOWNLOADS}");
 
     info!("Refreshing pacman database!");
     pacman::refresh_database();
@@ -37,7 +44,6 @@ pub fn pre_installation(settings: Settings) {
     info!("Update the system clock");
     Command::new("timedatectl")
         .args(["set-ntp", "true"]);
-
 
     /*                                              Layouts
 
@@ -109,6 +115,7 @@ pub fn pre_installation(settings: Settings) {
     // write to disk
     fdisk_commmand.push_str("w");
 
+    info!("Creating partitions..");
     let mut cmd_echo = Command::new("echo")
         .arg(fdisk_commmand)
         .stdout(Stdio::piped())
@@ -172,6 +179,7 @@ pub fn pre_installation(settings: Settings) {
     }
 
     if settings.partitioning_scheme == "gpt" {
+        info!("formating the efi system partition");
         Command::new("mkfs.fat")
             .arg("-F")
             .arg("32")
@@ -186,6 +194,7 @@ pub fn pre_installation(settings: Settings) {
         .status().unwrap();
 
     if settings.partitioning_scheme == "gpt" {
+        info!("mounting efi system partition");
         Command::new("mount")
             .arg("--mkdir")
             .arg(&efi_system_partition)
@@ -196,7 +205,6 @@ pub fn pre_installation(settings: Settings) {
 }
 
 fn update_mirrorlist() -> ExitStatus {
-    // reflector --latest 100 --sort rate --save /etc/pacman.d/mirrorlist --protocol https
     let status = Command::new("reflector")
         .args(["--latest", "100",
                 "--sort", "rate",

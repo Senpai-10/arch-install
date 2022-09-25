@@ -58,7 +58,6 @@ pub mod pacman {
             "/etc/pacman.conf"])
         .status().unwrap();
 
-        info!("pacman.conf: ParallelDownloads is set to '{}'", n);
     }
 
     /// pacman config
@@ -74,7 +73,6 @@ pub mod pacman {
             "/etc/pacman.conf"])
         .status().unwrap();
 
-        info!("pacman.conf: multilib enabled");
     }
 }
 
