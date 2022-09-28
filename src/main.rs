@@ -49,6 +49,7 @@ fn main() {
         exit(1);
     }
 
+    // Internet connection is needed for installing packages and more stuff!
     if is_online() == false {
         error!("Not connected to the internet.");
         exit(1);
