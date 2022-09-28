@@ -18,13 +18,25 @@ use constants::metadata::{VERSION, AUTHORS, DESCRIPTION, REPOSITORY};
 use helpers::{is_root, is_online};
 use installation_parts::pre_installation::pre_installation;
 
+use clap::Parser;
 use std::process::exit;
 use dialoguer::Confirm;
 use dialoguer::theme::ColorfulTheme;
 use colored::{self, Colorize};
 
+/// Simple Arch installer
+#[derive(Parser, Debug)]
+#[clap(author, version, about, long_about = None)]
+pub struct Cli {
+    #[clap(flatten)]
+    pub verbose: clap_verbosity_flag::Verbosity,
+}
 fn main() {
-    rust_logger::init();
+    let cli = Cli::parse();
+    let mut logger = rust_logger::builder();
+
+    logger.filter_level(cli.verbose.log_level_filter());
+    logger.init();
 
     let theme = ColorfulTheme::default();
     let mut settings: settings::Settings;
