@@ -1,20 +1,36 @@
-use crate::helpers::pacman;
 use crate::settings::Settings;
 use std::process::{Command, ExitStatus};
 // https://github.com/archlinux/archinstall/blob/c9e1d4a8c3435401220c1108ac938971ad517a37/archinstall/lib/installer.py#L430
 //
 // how to arch-chroot
 
-/// 2 Installation
-///
-/// 2.1 Select the mirrors
-///
-/// 2.2 Install essential packages
-pub fn main_installation(settings: &Settings) {
+/**
+**2 Installation**
+
+Select the mirrors
+
+Install essential packages
+*/
+pub fn main_installation() {
     info!("Selecting the fastest mirrors");
     if !update_mirrorlist(20).success() {
         error!("Failed to update mirrorlist");
     }
+
+    Command::new("pacstrap")
+        .arg("/mnt")
+        .args([
+            "base",
+            "base-devel",
+            "linux-lts",
+            "linux-lts-headers",
+            "linux",
+            "linux-headers",
+            "linux-firmware",
+            "neovim",
+        ])
+        .status()
+        .unwrap();
 }
 
 fn update_mirrorlist(latest: usize) -> ExitStatus {
