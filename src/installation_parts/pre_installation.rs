@@ -1,7 +1,7 @@
 use crate::helpers;
 use crate::{helpers::pacman, settings::Settings};
-use std::process::{Command, ExitStatus, Stdio};
 use std::io::{Read, Write};
+use std::process::{Command, Stdio};
 
 /**
 1. **pre installation**
@@ -18,32 +18,23 @@ use std::io::{Read, Write};
 
     Mount the file systems
 */
-pub fn pre_installation(settings: Settings) {
-    // TODO: uncomment this code!
-    // info!("Selecting the fastest mirrors");
-    // if !update_mirrorlist().success() {
-    //     error!("Failed to update mirrorlist");
-    // }
-
+pub fn pre_installation(settings: &Settings) {
     const PARALLEL_DOWNLOADS: usize = 15;
 
-    pacman::enable_multilib();
     info!("pacman.conf: multilib enabled");
-
-    pacman::set_parallel_downloads(PARALLEL_DOWNLOADS);
+    pacman::config::enable_multilib();
 
     info!("pacman.conf: ParallelDownloads = {PARALLEL_DOWNLOADS}");
+    pacman::config::set_parallel_downloads(PARALLEL_DOWNLOADS);
 
     info!("Refreshing pacman database!");
     pacman::refresh_database();
 
     info!("Set the console keyboard layout");
-    Command::new("loadkeys")
-        .arg(settings.keymap);
+    Command::new("loadkeys").arg(&settings.keymap);
 
     info!("Update the system clock");
-    Command::new("timedatectl")
-        .args(["set-ntp", "true"]);
+    Command::new("timedatectl").args(["set-ntp", "true"]);
 
     /*                                              Layouts
 
@@ -136,7 +127,10 @@ pub fn pre_installation(settings: Settings) {
             stdin.write_all(&buf).unwrap();
         }
     }
-    println!("output: {}", helpers::convert_vector_of_bytes_to_string(cmd_fdisk.wait_with_output().unwrap().stdout));
+    println!(
+        "output: {}",
+        helpers::convert_vector_of_bytes_to_string(cmd_fdisk.wait_with_output().unwrap().stdout)
+    );
 
     let mut root_partition = settings.drive.clone();
     let mut efi_system_partition = settings.drive.clone();
@@ -164,18 +158,21 @@ pub fn pre_installation(settings: Settings) {
 
     Command::new("mkfs.ext4")
         .arg(&root_partition)
-        .status().unwrap();
+        .status()
+        .unwrap();
 
     if settings.swap_type == "partition" {
         info!("mkswap {swap_partition}");
         Command::new("mkswap")
             .arg(&swap_partition)
-            .status().unwrap();
+            .status()
+            .unwrap();
 
         info!("swapon {swap_partition}");
         Command::new("swapon")
             .arg(&swap_partition)
-            .status().unwrap();
+            .status()
+            .unwrap();
     }
 
     if settings.partitioning_scheme == "gpt" {
@@ -184,14 +181,16 @@ pub fn pre_installation(settings: Settings) {
             .arg("-F")
             .arg("32")
             .arg(&efi_system_partition)
-            .status().unwrap();
+            .status()
+            .unwrap();
     }
 
     info!("Mount the file systems");
     Command::new("mount")
         .arg(&root_partition)
         .arg("/mnt")
-        .status().unwrap();
+        .status()
+        .unwrap();
 
     if settings.partitioning_scheme == "gpt" {
         info!("mounting efi system partition");
@@ -199,19 +198,7 @@ pub fn pre_installation(settings: Settings) {
             .arg("--mkdir")
             .arg(&efi_system_partition)
             .arg("/mnt/boot")
-            .status().unwrap();
+            .status()
+            .unwrap();
     }
-
-}
-
-fn update_mirrorlist() -> ExitStatus {
-    let status = Command::new("reflector")
-        .args(["--latest", "100",
-                "--sort", "rate",
-                "--save", "/etc/pacman.d/mirrorlist",
-                "--protocol", "https",
-                "--verbose"])
-        .status().unwrap();
-
-    status
 }
