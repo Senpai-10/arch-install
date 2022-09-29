@@ -94,5 +94,5 @@ fn main() {
     pre_installation(&settings);
 
     info!("Main installation");
-    main_installation(&settings);
+    main_installation();
 }

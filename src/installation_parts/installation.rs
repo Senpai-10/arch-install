@@ -17,18 +17,22 @@ pub fn main_installation() {
         error!("Failed to update mirrorlist");
     }
 
+    let packages = vec![
+        // install_essential_packages
+        "base",
+        "base-devel",
+        "linux-lts",
+        "linux-lts-headers",
+        "linux",
+        "linux-headers",
+        "linux-firmware",
+        "neovim",
+        // user packages
+    ];
+
     Command::new("pacstrap")
         .arg("/mnt")
-        .args([
-            "base",
-            "base-devel",
-            "linux-lts",
-            "linux-lts-headers",
-            "linux",
-            "linux-headers",
-            "linux-firmware",
-            "neovim",
-        ])
+        .args(packages)
         .status()
         .unwrap();
 }
