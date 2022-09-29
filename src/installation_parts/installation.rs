@@ -10,7 +10,7 @@ use std::process::{Command, ExitStatus};
 /// 2.1 Select the mirrors
 ///
 /// 2.2 Install essential packages
-pub fn main_installion(settings: &Settings) {
+pub fn main_installation(settings: &Settings) {
     info!("Selecting the fastest mirrors");
     if !update_mirrorlist(20).success() {
         error!("Failed to update mirrorlist");

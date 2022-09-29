@@ -4,7 +4,9 @@ pub fn is_root() -> bool {
         .output()
         .expect("failed to execute `id -u`");
 
-    let output = convert_vector_of_bytes_to_string(command.stdout).parse::<i32>().unwrap();
+    let output = convert_vector_of_bytes_to_string(command.stdout)
+        .parse::<i32>()
+        .unwrap();
 
     output == 0
 }
@@ -26,7 +28,8 @@ pub mod pacman {
     pub fn refresh_database() -> ExitStatus {
         let status = Command::new("pacman")
             .args(["-Sy"])
-            .status().expect("failed to refresh database");
+            .status()
+            .expect("failed to refresh database");
 
         status
     }
@@ -37,40 +40,45 @@ pub mod pacman {
             .arg("--noconfirm")
             .arg("-S")
             .args(packages)
-            .status().expect("failed to install package");
+            .status()
+            .expect("failed to install package");
 
         status
     }
 
-    /// pacman config
-    ///
-    /// Uncomment `ParallelDownloads`, and change number
-    ///
-    /// file: `/etc/pacman.conf`
-    pub fn set_parallel_downloads(n: usize) {
-        // put the number in the regex
-        let sed_regex = format!("s/^#ParallelDownloads = 5$/ParallelDownloads = {}/", n);
+    pub mod config {
+        use std::process::Command;
 
-        Command::new("sed")
-        .args([
-            "-i",
-            &sed_regex,
-            "/etc/pacman.conf"])
-        .status().unwrap();
-    }
+        /// pacman config
+        ///
+        /// Uncomment `ParallelDownloads`, and change number
+        ///
+        /// file: `/etc/pacman.conf`
+        pub fn set_parallel_downloads(n: usize) {
+            // put the number in the regex
+            let sed_regex = format!("s/^#ParallelDownloads = 5$/ParallelDownloads = {}/", n);
 
-    /// pacman config
-    ///
-    /// Uncomment [multilib], and 'Include' line
-    ///
-    /// file: `/etc/pacman.conf`
-    pub fn enable_multilib() {
-        Command::new("sed")
-        .args([
-            "-i",
-            "\"/\\[multilib\\]/,/Include/\"'s/^#//'",
-            "/etc/pacman.conf"])
-        .status().unwrap();
+            Command::new("sed")
+                .args(["-i", &sed_regex, "/etc/pacman.conf"])
+                .status()
+                .unwrap();
+        }
+
+        /// pacman config
+        ///
+        /// Uncomment [multilib], and 'Include' line
+        ///
+        /// file: `/etc/pacman.conf`
+        pub fn enable_multilib() {
+            Command::new("sed")
+                .args([
+                    "-i",
+                    "\"/\\[multilib\\]/,/Include/\"'s/^#//'",
+                    "/etc/pacman.conf",
+                ])
+                .status()
+                .unwrap();
+        }
     }
 }
 

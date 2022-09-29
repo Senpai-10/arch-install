@@ -1,28 +1,30 @@
 // https://wiki.archlinux.org/title/Installation_guide
 
-#[macro_use] extern crate prettytable;
+#[macro_use]
+extern crate prettytable;
 
 #[macro_use]
 extern crate log;
 extern crate rust_logger;
 
-mod settings;
-mod installation_parts;
-mod constants;
 mod censor_password;
-mod helpers;
+mod constants;
 mod get_settings;
+mod helpers;
+mod installation_parts;
+mod settings;
 
+use constants::metadata::{AUTHORS, DESCRIPTION, REPOSITORY, VERSION};
 use get_settings::get_settings;
-use constants::metadata::{VERSION, AUTHORS, DESCRIPTION, REPOSITORY};
-use helpers::{is_root, is_online};
+use helpers::{is_online, is_root};
+use installation_parts::installation::main_installation;
 use installation_parts::pre_installation::pre_installation;
 
 use clap::Parser;
-use std::process::exit;
-use dialoguer::Confirm;
-use dialoguer::theme::ColorfulTheme;
 use colored::{self, Colorize};
+use dialoguer::theme::ColorfulTheme;
+use dialoguer::Confirm;
+use std::process::exit;
 
 /// Simple Arch installer
 #[derive(Parser, Debug)]
@@ -41,13 +43,17 @@ fn main() {
     let theme = ColorfulTheme::default();
     let mut settings: settings::Settings;
 
-    println!("{}", r"
+    println!(
+        "{}",
+        r"
                  _           _           _        _ _
    __ _ _ __ ___| |__       (_)_ __  ___| |_ __ _| | | ___ _ __
   / _` | '__/ __| '_ \ _____| | '_ \/ __| __/ _` | | |/ _ \ '__|
  | (_| | | | (__| | | |_____| | | | \__ \ || (_| | | |  __/ |
   \__,_|_|  \___|_| |_|     |_|_| |_|___/\__\__,_|_|_|\___|_|
-".bright_green());
+"
+        .bright_green()
+    );
 
     println!("Autors: {}", AUTHORS.bright_black());
     println!("Description: {}", DESCRIPTION.bright_black());
@@ -76,13 +82,17 @@ fn main() {
             .with_prompt("Do you want to continue")
             .default(true)
             .show_default(true)
-            .interact().unwrap();
+            .interact()
+            .unwrap();
 
         if continue_script {
             break;
         }
     }
 
-    pre_installation(settings);
-}
+    info!("Pre installation");
+    pre_installation(&settings);
 
+    info!("Main installation");
+    main_installation(&settings);
+}
