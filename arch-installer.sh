@@ -153,17 +153,26 @@ NO_COLOR='\033[0m'
 
 #########################
 
+function check_missing_configs {
+    if [[ -z $HOSTNAME || -z $ROOT_PASSWORD || -z $USERNAME || -z $USER_PASSWORD ]]; then
+        print_error "Missing some configs!\n\tedit arch-installer.sh and set the config!"
+        exit 1
+    fi
+}
+
 function run {
+    check_missing_configs
+
+    check_internet_connection
+
     print_banner
 
     echo -e "source: ${BIYellow}https://github.com/senpai-10/arch-install${NO_COLOR}"
     echo -e "Version: ${BIYellow}${VERSION}${NO_COLOR}"
 
-    check_internet_connection
-
-    echo EFI_SYSTEM_PARTITION: $EFI_SYSTEM_PARTITION
-    echo SWAP_PARTITION: $SWAP_PARTITION
-    echo ROOT_PARTITION: $ROOT_PARTITION
+    print_debug EFI_SYSTEM_PARTITION: $EFI_SYSTEM_PARTITION
+    print_debug SWAP_PARTITION: $SWAP_PARTITION
+    print_debug ROOT_PARTITION: $ROOT_PARTITION
 }
 
 function print_banner {
