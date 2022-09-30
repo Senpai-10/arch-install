@@ -14,15 +14,55 @@ VERSION="0.0.1"
 #
 ONLY_DO_BASE_INSTALLATION=false
 
+# Computer name
+# example: "my-desktop"
 HOSTNAME=""
+
+# root user password
 ROOT_PASSWORD=""
+
+# your username
 USERNAME=""
+
+# your user password
 USER_PASSWORD=""
+
 KEYMAP="us"
+
+# drive partitioning table scheme
+# Values:
+#       gpt
+#       mbr
+# if you are using an old computer select mbr
 PARTITIONING_SCHEME=""
+
+# System installation drive
+# use lsblk command to know what drive to use
+# be carefull your drive will be formatted and you will lose all data
+# example: "/dev/sda"
 DRIVE=""
+
+# select if you want a swap file or a swap partition
+# Values:
+#       file
+#       partition
 SWAP_TYPE=""
+
+# The size of your swap partition/file
+# Values:
+#       {size{G,M}}
+# example: 8G
+# this example will create a 8 gigabytes swap partition/file
 SWAP_SIZE=""
+
+# TODO:
+# find swap partition
+# find boot partition
+# find root partition
+
+#if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
+#    swap_test="/dev/sda2"
+#fi
 
 #########################
 
