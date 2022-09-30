@@ -4,6 +4,8 @@ VERSION="0.0.1"
 
 #########################
 #   Config
+#
+#   EDIT THIS PART
 
 #   !!!!!!!!!!!!!!!! READ THIS !!!!!!!!!!!!!!!!
 #   
@@ -12,7 +14,7 @@ VERSION="0.0.1"
 #
 ONLY_DO_BASE_INSTALLATION=false
 
-HOSTNAME="mars"
+HOSTNAME=""
 ROOT_PASSWORD=""
 USERNAME=""
 USER_PASSWORD=""
