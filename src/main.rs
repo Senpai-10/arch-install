@@ -1,4 +1,5 @@
 // https://wiki.archlinux.org/title/Installation_guide
+// Download link: https://senpai-10.github.io/arch-install/arch-installer-testing
 
 #[macro_use]
 extern crate prettytable;
@@ -17,8 +18,9 @@ mod settings;
 use constants::metadata::{AUTHORS, DESCRIPTION, REPOSITORY, VERSION};
 use get_settings::get_settings;
 use helpers::{is_online, is_root};
-use installation_parts::installation::main_installation;
 use installation_parts::pre_installation::pre_installation;
+use installation_parts::installation::main_installation;
+use installation_parts::configure_the_system::configure_the_system;
 
 use clap::Parser;
 use colored::{self, Colorize};
@@ -95,4 +97,7 @@ fn main() {
 
     info!("Main installation");
     main_installation();
+
+    info!("Configure the system");
+    configure_the_system(&settings);
 }
