@@ -4,7 +4,7 @@
 
 ## install
 
-```
+```bash
 curl -O https://senpai-10.github.io/arch-install/arch-installer.sh
 chmod +x arch-installer.sh &&
 
