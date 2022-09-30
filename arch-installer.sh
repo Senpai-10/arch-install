@@ -274,7 +274,7 @@ function pre_installation {
     ECHO_FDISK+="\n"
     ECHO_FDISK+="w"
 
-    echo -e $ECHO_FDISK | fdisk $DRIVE
+    echo -e $ECHO_FDISK | fdisk -L=always $DRIVE
 }
 
 run
