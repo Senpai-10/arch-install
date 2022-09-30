@@ -111,7 +111,6 @@ function run {
     
 }
 
-
 function print_banner {
     echo -e $IGreen
     cat << "EOF" 
