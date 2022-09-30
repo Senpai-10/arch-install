@@ -168,6 +168,10 @@ function run {
     print_debug SWAP_PARTITION: $SWAP_PARTITION
     print_debug ROOT_PARTITION: $ROOT_PARTITION
 
+    # stop executing the script and wait for any key press
+    # in case the script was ran by accident
+    read -rsn1 -p"${IGreen}Press any key to continue${NO_COLOR} " variable;echo
+
     pre_installation
 }
 
