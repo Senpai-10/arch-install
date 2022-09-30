@@ -167,6 +167,8 @@ function run {
     print_debug EFI_SYSTEM_PARTITION: $EFI_SYSTEM_PARTITION
     print_debug SWAP_PARTITION: $SWAP_PARTITION
     print_debug ROOT_PARTITION: $ROOT_PARTITION
+
+    pre_installation
 }
 
 function print_banner {
@@ -272,7 +274,7 @@ function pre_installation {
     ECHO_FDISK+="\n"
     ECHO_FDISK+="w"
 
-    fdisk $DRIVE $ECHO_FDISK
+    echo -e $ECHO_FDISK | fdisk $DRIVE
 }
 
 run
