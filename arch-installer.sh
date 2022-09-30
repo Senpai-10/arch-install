@@ -55,6 +55,8 @@ SWAP_TYPE=""
 # this example will create a 8 gigabytes swap partition/file
 SWAP_SIZE=""
 
+#########################
+
 if [[ $PARTITIONING_SCHEME = "gpt" ]] && [[ $SWAP_TYPE = "partition" ]]; then
     EFI_SYSTEM_PARTITION="${DRIVE}1"
     SWAP_PARTITION="${DRIVE}2"
@@ -74,7 +76,6 @@ fi
 if [[ $PARTITIONING_SCHEME = "mbr" ]] && [[ $SWAP_TYPE = "file" ]]; then
     ROOT_PARTITION="${DRIVE}1"
 fi
-#########################
 
 #########################
 #   colors
