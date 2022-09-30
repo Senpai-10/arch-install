@@ -153,13 +153,6 @@ NO_COLOR='\033[0m'
 
 #########################
 
-function check_missing_configs {
-    if [[ -z $HOSTNAME || -z $ROOT_PASSWORD || -z $USERNAME || -z $USER_PASSWORD ]]; then
-        print_error "Missing some configs!\n\tedit arch-installer.sh and set the config!"
-        exit 1
-    fi
-}
-
 function run {
     check_missing_configs
 
@@ -203,6 +196,12 @@ function print_debug {
     echo -e "[${IGreen}DEBUG${NO_COLOR}] ${IYellow}$@${NO_COLOR}"
 }
 
+function check_missing_configs {
+    if [[ -z $HOSTNAME || -z $ROOT_PASSWORD || -z $USERNAME || -z $USER_PASSWORD ]]; then
+        print_error "Missing some configs!\n\tedit arch-installer.sh and set the config!"
+        exit 1
+    fi
+}
 function check_internet_connection {
     print_info "Checking internet connection..."
 
