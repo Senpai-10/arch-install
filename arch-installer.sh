@@ -55,15 +55,25 @@ SWAP_TYPE=""
 # this example will create a 8 gigabytes swap partition/file
 SWAP_SIZE=""
 
-# TODO:
-# find swap partition
-# find boot partition
-# find root partition
+if [[ $PARTITIONING_SCHEME = "gpt" ]] && [[ $SWAP_TYPE = "partition" ]]; then
+    EFI_SYSTEM_PARTITION="${DRIVE}1"
+    SWAP_PARTITION="${DRIVE}2"
+    ROOT_PARTITION="${DRIVE}3"
+fi
 
-#if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
-#    swap_test="/dev/sda2"
-#fi
+if [[ $PARTITIONING_SCHEME = "gpt" ]] && [[ $SWAP_TYPE = "file" ]]; then
+    EFI_SYSTEM_PARTITION="${DRIVE}1"
+    ROOT_PARTITION="${DRIVE}2"
+fi
 
+if [[ $PARTITIONING_SCHEME = "mbr" ]] && [[ $SWAP_TYPE = "partition" ]]; then
+    SWAP_PARTITION="${DRIVE}1"
+    ROOT_PARTITION="${DRIVE}2"
+fi
+
+if [[ $PARTITIONING_SCHEME = "mbr" ]] && [[ $SWAP_TYPE = "file" ]]; then
+    ROOT_PARTITION="${DRIVE}1"
+fi
 #########################
 
 #########################
@@ -151,6 +161,9 @@ function run {
 
     check_internet_connection
 
+    echo EFI_SYSTEM_PARTITION: $EFI_SYSTEM_PARTITION
+    echo SWAP_PARTITION: $SWAP_PARTITION
+    echo ROOT_PARTITION: $ROOT_PARTITION
 }
 
 function print_banner {
