@@ -216,4 +216,63 @@ function check_internet_connection {
     fi
 }
 
+function pre_installation {
+    sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
+    sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+
+    pacman -Sy
+
+    loadkeys $KEYMAP
+
+    timedatectl set-ntp true
+
+    ECHO_FDISK=""
+
+    if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
+        ECHO_FDISK+="o\n"
+    fi
+
+    if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
+        ECHO_FDISK+="g\n"
+        # Create boot partition
+        ECHO_FDISK+="n\n"
+        ECHO_FDISK+="\n"
+        ECHO_FDISK+="\n"
+        ECHO_FDISK+="+300M\n"
+        ECHO_FDISK+="t\n"
+        ECHO_FDISK+="uefi"
+    fi
+
+    if [[ $SWAP_TYPE = "partition" ]]; then
+        ECHO_FDISK+="n\n"
+        if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
+            # select primary partition
+            ECHO_FDISK+="p\n"
+        fi
+        # auto select partition number
+        ECHO_FDISK+="\n"
+        # select first sector
+        ECHO_FDISK+="\n"
+        ECHO_FDISK+="+${SWAP_SIZE}\n"
+        # change partition type
+        ECHO_FDISK+="t\n"
+        ECHO_FDISK+="\n"
+        # select linux swap partition
+        ECHO_FDISK+="swap\n"
+    fi
+
+    # create root partition
+    ECHO_FDISK+="n\n"
+    if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
+        # select primary partition
+        ECHO_FDISK+="p\n"
+    fi
+    ECHO_FDISK+="\n"
+    ECHO_FDISK+="\n"
+    ECHO_FDISK+="\n"
+    ECHO_FDISK+="w"
+
+    fdisk $DRIVE $ECHO_FDISK
+}
+
 run
