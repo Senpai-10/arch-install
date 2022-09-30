@@ -8,7 +8,7 @@ VERSION="0.0.1"
 #   EDIT THIS PART
 
 #   !!!!!!!!!!!!!!!! READ THIS !!!!!!!!!!!!!!!!
-#   
+#
 #   Set this to true if you don't want to install my (senpai-10) dotfiles
 #   and packages, and Just do a minimal installation.
 #
@@ -110,12 +110,12 @@ function run {
     echo -e "Version: ${BIYellow}${VERSION}${NO_COLOR}"
 
     check_internet_connection
-    
+
 }
 
 function print_banner {
     echo -e $IGreen
-    cat << "EOF" 
+    cat << "EOF"
                  _           _           _        _ _
    __ _ _ __ ___| |__       (_)_ __  ___| |_ __ _| | | ___ _ __
   / _` | '__/ __| '_ \ _____| | '_ \/ __| __/ _` | | |/ _ \ '__|
