@@ -1,8 +1,4 @@
-use crate::settings::Settings;
 use std::process::{Command, ExitStatus};
-// https://github.com/archlinux/archinstall/blob/c9e1d4a8c3435401220c1108ac938971ad517a37/archinstall/lib/installer.py#L430
-//
-// how to arch-chroot
 
 /**
 **2 Installation**
@@ -26,6 +22,7 @@ pub fn main_installation() {
         "linux",
         "linux-headers",
         "linux-firmware",
+        // add efibootmgr if gpt
         "neovim",
         // user packages
     ];
