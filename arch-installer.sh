@@ -242,7 +242,7 @@ function pre_installation {
         ECHO_FDISK+="\n"
         ECHO_FDISK+="+300M\n"
         ECHO_FDISK+="t\n"
-        ECHO_FDISK+="uefi"
+        ECHO_FDISK+="uefi\n"
     fi
 
     if [[ $SWAP_TYPE = "partition" ]]; then
@@ -255,7 +255,7 @@ function pre_installation {
         ECHO_FDISK+="\n"
         # select first sector
         ECHO_FDISK+="\n"
-        ECHO_FDISK+="+${SWAP_SIZE}\n"
+        ECHO_FDISK+="+$SWAP_SIZE\n"
         # change partition type
         ECHO_FDISK+="t\n"
         ECHO_FDISK+="\n"
