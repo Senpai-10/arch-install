@@ -173,6 +173,8 @@ function main {
     read -rsn1 -p"Press any key to continue " variable;echo
 
     pre_installation
+
+    main_installation
 }
 
 function print_banner {
@@ -297,6 +299,14 @@ function pre_installation {
     if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
         mount --mkdir $EFI_SYSTEM_PARTITION /mnt/boot
     fi
+}
+
+function main_installation {
+        reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --verbose
+
+        local BASE_PACKAGES="base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim"
+
+        pacstrap /mnt $BASE_PACKAGES
 }
 
 main
