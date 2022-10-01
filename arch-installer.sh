@@ -175,6 +175,8 @@ function main {
     pre_installation
 
     main_installation
+
+    configure_the_system
 }
 
 function print_banner {
