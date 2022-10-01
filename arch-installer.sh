@@ -279,6 +279,24 @@ function pre_installation {
     ECHO_FDISK+="w"
 
     echo -e $ECHO_FDISK | fdisk -L=always $DRIVE
+
+    mkfs.ext4 $ROOT_PARTITION
+
+    if [[ $SWAP_TYPE = "partition" ]]; then
+        mkswap $SWAP_PARTITION
+
+        swapon $SWAP_PARTITION
+    fi
+
+    if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
+        mkfs.fat -F 32 $EFI_SYSTEM_PARTITION
+    fi
+
+    mount $ROOT_PARTITION /mnt
+
+    if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
+        mount --mkdir $EFI_SYSTEM_PARTITION /mnt/boot
+    fi
 }
 
 run
