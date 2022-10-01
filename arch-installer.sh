@@ -170,7 +170,7 @@ function run {
 
     # stop executing the script and wait for any key press
     # in case the script was ran by accident
-    read -rsn1 -p"${IGreen}Press any key to continue${NO_COLOR} " variable;echo
+    read -rsn1 -p"Press any key to continue " variable;echo
 
     pre_installation
 }
