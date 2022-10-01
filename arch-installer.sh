@@ -168,15 +168,16 @@ function main {
     print_debug SWAP_PARTITION: $SWAP_PARTITION
     print_debug ROOT_PARTITION: $ROOT_PARTITION
 
-    # stop executing the script and wait for any key press
-    # in case the script was ran by accident
-    read -rsn1 -p"Press any key to continue " variable;echo
+    if [[ $1 = "--run-arch-chroot" ]]; then
+        configure_the_system
+    else
+        # stop executing the script and wait for any key press
+        # in case the script was ran by accident
+        read -rsn1 -p"Press any key to continue " variable;echo
 
-    pre_installation
-
-    main_installation
-
-    configure_the_system
+        pre_installation
+        main_installation
+    fi
 }
 
 function print_banner {
@@ -309,26 +310,28 @@ function main_installation {
         local BASE_PACKAGES="base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim"
 
         pacstrap /mnt $BASE_PACKAGES
+
+        genfstab -U /mnt >> /mnt/etc/fstab
+
+        cp arch-installer.sh /mnt/
+
+        arch-chroot /mnt ./arch-installer.sh --run-arch-chroot
+        exit
 }
 
 function configure_the_system {
-    genfstab -U /mnt >> /mnt/etc/fstab
-
-    cat /mnt/etc/fstab
-
+    # inside arch-chroot
     local TIME_ZONE=$(curl --fail https://ipapi.co/timezone)
-
-    arch-chroot /mnt
 
     ln -sf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime
 
     hwclock --systohc
 
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 
     locale-gen
 
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
 }
 
-main
+main $1
