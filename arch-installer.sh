@@ -154,7 +154,7 @@ NO_COLOR='\033[0m'
 
 #########################
 
-function run {
+function main {
     check_missing_configs
 
     check_internet_connection
@@ -299,4 +299,4 @@ function pre_installation {
     fi
 }
 
-run
+main
