@@ -309,4 +309,24 @@ function main_installation {
         pacstrap /mnt $BASE_PACKAGES
 }
 
+function configure_the_system {
+    genfstab -U /mnt >> /mnt/etc/fstab
+
+    cat /mnt/etc/fstab
+
+    local TIME_ZONE=$(curl --fail https://ipapi.co/timezone)
+
+    arch-chroot /mnt
+
+    ln -sf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime
+
+    hwclock --systohc
+
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+
+    locale-gen
+
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+}
+
 main
