@@ -321,6 +321,14 @@ function main_installation {
 
 function configure_the_system {
     # inside arch-chroot
+
+    sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
+    sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+
+    pacman -Sy
+
+    reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --verbose
+
     local TIME_ZONE=$(curl --fail https://ipapi.co/timezone)
 
     ln -sf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime
@@ -332,6 +340,157 @@ function configure_the_system {
     locale-gen
 
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+    echo $HOSTNAME > /etc/hostname
+
+    echo "127.0.0.1       localhost" >> /etc/hosts
+    echo "::1             localhost" >> /etc/hosts
+    echo "127.0.1.1       $HOSTNAME.localdomain $HOSTNAME" >> /etc/hosts
+
+    echo "root:$ROOT_PASSWORD" | chpasswd
+
+    pacman --noconfirm -S grub efibootmgr networkmanager network-manager-applet wireless_tools wpa_supplicant os-prober mtools dosfstools
+
+    if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
+        grub-install --target=i386-pc $DRIVE
+    fi
+
+    if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
+        grub-install --target=x86_64-efi $DRIVE --efi-directory=$EFI_SYSTEM_PARTITION --bootloader-id=GRUB
+    fi
+
+    grub-mkconfig -o /boot/grub/grub.cfg
+
+    os-prober
+
+    USER_PACKAGES="xorg-xwud xorg-xwininfo xorg-xwd xorg-xvinfo xorg-xset xorg-xrefresh xorg-xrdb ttf-fantasque-sans-mono ttf-fira-code ttf-liberation virt-manager virt-viewer wget xbindkeys xorg-bdftopcf xorg-docs xorg-font-util xorg-fonts-100dpi xorg-fonts-75dpi xorg-fonts-encodings xorg-iceauth xorg-mkfontscale xorg-server xorg-server-common xorg-server-devel xorg-server-xephyr xorg-server-xnest xorg-server-xvfb xorg-sessreg xorg-setxkbmap xorg-smproxy xorg-x11perf xorg-xauth xorg-xbacklight xorg-xcmsdb xorg-xcursorgen xorg-xdpyinfo xorg-xdriinfo xorg-xev xorg-xgamma xorg-xhost xorg-xinput xorg-xkbcomp xorg-xpr xorg-xrandr alacritty alsa-tools alsa-utils atom bashtop bat bc bitwarden bitwarden-cli bspwm cmus code discord dmenu dnsmasq docker easytag emacs fd feh fff ffmpegthumbnailer ffmpegthumbs flameshot gimp gnome-calculator highlight htop imwheel jgmenu lib32-libpulse libguestfs libpng12 libvirt lxappearance lxappearance-obconf menumaker nemo neofetch nitrogen nodejs npm obconf onboard pavucontrol python-setuptools qemu qemu-arch-extra redis reflector rofi rxvt-unicode scrot sdl_image steam terminus-font tree ttf-dejavu ttf-droid xorg-xkbevd xorg-xkbutils xorg-xlsatoms xorg-xlsclients xorg-xmodmap xorg-xinit xorg-xkill xorg-xsetroot xorg-xprop noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-jetbrains-mono ttf-joypixels ttf-font-awesome sxiv mpv zathura zathura-pdf-mupdf ffmpeg imagemagick fzf man-db python-pywal youtube-dl xclip maim zip unzip unrar p7zip xdotool papirus-icon-theme ntfs-3g sxhkd zsh arc-gtk-theme rsync firefox dash slock jq dhcpcd pamixer which yarn yad kdenlive kate gparted gtk4 gtop hwinfo tint2 dbeaver awesome picom libwacom eog github-cli transmission-gtk"
+
+    pacman -S --noconfirm $USER_PACKAGES
+
+    systemctl enable NetworkManager.service
+
+    chsh -s $(which zsh)
+
+    echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+
+    useradd -m -G wheel $USERNAME
+
+    echo "$USERNAME:$USER_PASSWORD" | chpasswd
+
+    git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ..
+    yay -S --noconfirm alacritty-themes
+    yay -S --noconfirm brave-bin
+    yay -S --noconfirm btops-git
+    yay -S --noconfirm cava-git
+    yay -S --noconfirm code-marketplace
+    yay -S --noconfirm colorpicker
+    yay -S --noconfirm compton-conf-git
+    yay -S --noconfirm consolas-font
+    yay -S --noconfirm deadd-notification-center-bin
+    yay -S --noconfirm discord-qt-appimage
+    yay -S --noconfirm dxhd-bin
+    yay -S --noconfirm figma-linux
+    yay -S --noconfirm fontpreview-ueberzug-git
+    yay -S --noconfirm google-chrome
+    yay -S --noconfirm lf-bin
+    yay -S --noconfirm ls-icons
+    yay -S --noconfirm mongodb-bin
+    yay -S --noconfirm mongodb-tools-bin
+    yay -S --noconfirm mongosh-bin
+    yay -S --noconfirm nerd-fonts-complete
+    yay -S --noconfirm noto-fonts-sc
+    yay -S --noconfirm otf-symbola
+    yay -S --noconfirm polybar
+    yay -S --noconfirm selectdefaultapplication-git
+    yay -S --noconfirm spacefm
+    yay -S --noconfirm spaceship-prompt-git
+    yay -S --noconfirm spotify
+    yay -S --noconfirm ttf-icomoon-feather
+    yay -S --noconfirm ttf-material-icons-git
+    yay -S --noconfirm ttf-ms-fonts
+    yay -S --noconfirm pnpm-bin
+    yay -S --noconfirm betterdiscord-installer-bin
+    yay -S --noconfirm snapd
+    yay -S --noconfirm pamac-all
+    yay -S --noconfirm icons-in-terminal
+    yay -S --noconfirm inxi
+    yay -S --noconfirm epson-inkjet-printer-escpr
+    yay -S --noconfirm gromit-mpx
+    yay -S --noconfirm tlauncher
+    yay -S --noconfirm vtop
+    yay -S --noconfirm xsetwacom
+    yay -S --noconfirm pyinstaller
+    yay -S --noconfirm smenu
+    yay -S --noconfirm notion-app
+    yay -S --noconfirm discover-overlay
+
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+    git clone https://github.com/senpai-10/dotfiles ~/.dotfiles &&
+    cd ~/.dotfiles
+
+    mkdir -pv ~/Documents
+    mkdir -pv ~/Pictures
+    mkdir -pv ~/Downloads
+    mkdir -pv ~/Music
+    mkdir -pv ~/Videos
+    mkdir -pv ~/Screenshots
+    mkdir -pv ~/mpv_screenshots
+    mkdir -pv ~/AppImages
+    mkdir -pv ~/clone
+    mkdir -pv ~/suckless
+    sudo mkdir -pv /usr/share/cmus/
+    sudo mkdir -pv /usr/local/share/fonts
+
+    cp -rfv dotfiles/.config ~/
+    cp -av dotfiles/home/. ~/
+    cp fonts/* ~/.local/share/fonts/
+    sudo cp themes/cmus/*.theme /usr/share/cmus/
+
+    sudo systemctl enable libvirtd --now
+    sudo usermod -a -G libvirt $USER
+
+    sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+    sudo chmod a+rx /usr/local/bin/yt-dlp
+
+    flameshot config --showhelp false
+    jgmenu_run init --theme=archlabs_1803
+    sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+
+    git clone https://github.com/powerline/fonts.git &&
+    cd fonts && ./install.sh && cd ..
+
+    wget https://support.steampowered.com/downloads/1974-YFKL-4947/SteamFonts.zip &&
+    unzip SteamFonts.zip -d SteamFonts/ && rm SteamFonts.zip &&
+    sudo mv SteamFonts/* /usr/local/share/fonts &&
+    rm -rf SteamFonts/
+
+    git clone https://github.com/thameera/vimv.git &&
+    sudo cp vimv/vimv /usr/local/bin/ &&
+    sudo chmod +x /usr/local/bin/vimv
+
+    wget https://github.com/Superjo149/auryo/releases/download/v2.5.4/Auryo-2.5.4.AppImage &&
+    chmod +x Auryo-2.5.4.AppImage &&
+    mv Auryo-2.5.4.AppImage ~/AppImages/auryo
+
+    wget https://download.kde.org/stable/krita/4.4.8/krita-4.4.8-x86_64.appimage &&
+    chmod +x krita-4.4.8-x86_64.appimage &&
+    mv krita-4.4.8-x86_64.appimage ~/AppImages/krita
+
+    wget https://github.com/ppy/osu/releases/download/2021.907.0/osu.AppImage &&
+    chmod +x osu.AppImage &&
+    mv osu.AppImage ~/AppImages/osu
+
+    wget https://hyperbeam.com/download/linux &&
+    chmod +x linux &&
+    mv linux ~/AppImages/hyperbeam
+
+    wget https://github.com/notable/notable/releases/download/v1.8.4/Notable-1.8.4.AppImage &&
+    chmod +x Notable-1.8.4.AppImage &&
+    mv Notable-1.8.4.AppImage ~/AppImages/notable
+
+    exit
 }
 
 main $1
