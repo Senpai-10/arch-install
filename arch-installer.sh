@@ -393,11 +393,12 @@ function fn_post_installation {
 
     git clone https://github.com/Senpai-10/dotfiles.git .dotfiles
 
-    cd .dotifles
+    cd .dotfiles
 
     ./bootstrap.sh
 
-    rm -- "$0"
+    #rm -- "$0"
+    rm ~/arch-installer.sh
 }
 
 fn_main $1
