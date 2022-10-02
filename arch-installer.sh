@@ -154,33 +154,34 @@ NO_COLOR='\033[0m'
 
 #########################
 
-function main {
-    check_missing_configs
+function fn_main {
+    fn_check_missing_configs
 
-    check_internet_connection
+    fn_check_internet_connection
 
-    print_banner
+    fn_print_banner
 
     echo -e "source: ${BIYellow}https://github.com/senpai-10/arch-install${NO_COLOR}"
     echo -e "Version: ${BIYellow}${VERSION}${NO_COLOR}"
 
-    print_debug EFI_SYSTEM_PARTITION: $EFI_SYSTEM_PARTITION
-    print_debug SWAP_PARTITION: $SWAP_PARTITION
-    print_debug ROOT_PARTITION: $ROOT_PARTITION
+    fn_print_debug EFI_SYSTEM_PARTITION: $EFI_SYSTEM_PARTITION
+    fn_print_debug SWAP_PARTITION: $SWAP_PARTITION
+    fn_print_debug ROOT_PARTITION: $ROOT_PARTITION
 
     if [[ $1 = "--run-arch-chroot" ]]; then
-        configure_the_system
+        fn_configure_the_system
+        func_configure_the_system
     else
         # stop executing the script and wait for any key press
         # in case the script was ran by accident
         read -rsn1 -p"Press any key to continue " variable;echo
 
-        pre_installation
-        main_installation
+        fn_pre_installation
+        fn_main_installation
     fi
 }
 
-function print_banner {
+function fn_print_banner {
     echo -e $IGreen
     cat << "EOF"
                  _           _           _        _ _
@@ -192,42 +193,42 @@ EOF
     echo -e $NO_COLOR
 }
 
-function print_info {
+function fn_print_info {
     echo -e "[${IBlue}INFO${NO_COLOR}] ${IYellow}$@${NO_COLOR}"
 }
 
-function print_error {
+function fn_print_error {
     echo -e "[${IRed}ERROR${NO_COLOR}] ${IYellow}$@${NO_COLOR}"
 }
 
-function print_warning {
+function fn_print_warning {
     echo -e "[${IYellow}WARNING${NO_COLOR}] ${IYellow}$@${NO_COLOR}"
 }
 
-function print_debug {
+function fn_print_debug {
     echo -e "[${IGreen}DEBUG${NO_COLOR}] ${IYellow}$@${NO_COLOR}"
 }
 
-function check_missing_configs {
+function fn_check_missing_configs {
     if [[ -z $HOSTNAME || -z $ROOT_PASSWORD || -z $USERNAME || -z $USER_PASSWORD ]]; then
-        print_error "Missing some configs!\n\tedit arch-installer.sh and set the config!"
+        fn_print_error "Missing some configs!\n\tedit arch-installer.sh and set the config!"
         exit 1
     fi
 }
-function check_internet_connection {
-    print_info "Checking internet connection..."
+function fn_check_internet_connection {
+    fn_print_info "Checking internet connection..."
 
     ping -c1 "8.8.8.8" &>"/dev/null"
 
     if [[ "${?}" -ne 0 ]]; then
-        print_error "No internect connection. Exiting now!"
+        fn_print_error "No internect connection. Exiting now!"
         exit 1
     elif [[ "${#args[@]}" -eq 0 ]]; then
-        print_info "internet connection found!"
+        fn_print_info "internet connection found!"
     fi
 }
 
-function pre_installation {
+function fn_pre_installation {
     sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
     sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
@@ -304,7 +305,7 @@ function pre_installation {
     fi
 }
 
-function main_installation {
+function fn_main_installation {
         reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --verbose
 
         local BASE_PACKAGES="base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim"
@@ -319,7 +320,7 @@ function main_installation {
         exit
 }
 
-function configure_the_system {
+function fn_configure_the_system {
     # inside arch-chroot
 
     sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
@@ -378,4 +379,4 @@ function configure_the_system {
     echo "$USERNAME:$USER_PASSWORD" | chpasswd
 }
 
-main $1
+fn_main $1
