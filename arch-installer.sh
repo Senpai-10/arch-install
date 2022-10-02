@@ -366,13 +366,13 @@ function fn_configure_the_system {
 
     os-prober
 
+    systemctl enable NetworkManager.service
+
     echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
     useradd -m -G wheel $USERNAME
 
     echo "$USERNAME:$USER_PASSWORD" | chpasswd
-
-    #
 
     local SCRIPT_PATH=/home/$USERNAME/arch-installer.sh
 
