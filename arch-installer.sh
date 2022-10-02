@@ -398,7 +398,6 @@ function fn_post_installation {
     ./bootstrap.sh
 
     rm -- "$0"
-    exit
 }
 
 fn_main $1
