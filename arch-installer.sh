@@ -164,10 +164,6 @@ function fn_main {
     echo -e "source: ${BIYellow}https://github.com/senpai-10/arch-install${NO_COLOR}"
     echo -e "Version: ${BIYellow}${VERSION}${NO_COLOR}"
 
-    fn_print_debug EFI_SYSTEM_PARTITION: $EFI_SYSTEM_PARTITION
-    fn_print_debug SWAP_PARTITION: $SWAP_PARTITION
-    fn_print_debug ROOT_PARTITION: $ROOT_PARTITION
-
     if [[ $1 = "--run-arch-chroot" ]]; then
         fn_configure_the_system
         fn_configure_the_system
