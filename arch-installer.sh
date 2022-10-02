@@ -362,6 +362,8 @@ function fn_configure_the_system {
 
     os-prober
 
+    pacman -S --noconfirm git
+
     systemctl enable NetworkManager.service
 
     echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
@@ -380,22 +382,23 @@ function fn_configure_the_system {
 
     echo "source $SCRIPT_PATH --run-post-installation" >> /home/$USERNAME/.bash_profile
 
-    fn_print_info "REMOVE INSTALLATION MEDIUM!!"
+    fn_print_info "remove installation medium and reboot!!"
     fn_print_info "after rebooting login as '$USERNAME'."
 
-    secs=$((5))
-
-    while [ $secs -gt 0 ]; do
-        echo -ne "REBOOTING in ${IRed}$secs${NO_COLOR}\033[0K\r"
-        sleep 1
-        : $((secs--))
-    done
-
-    reboot
+    exit
 }
 
 function fn_post_installation {
-    echo "hi post installation"
+    sed -i '/arch/d' .bash_profile
+
+    git clone https://github.com/Senpai-10/dotfiles.git .dotfiles
+
+    cd .dotifles
+
+    ./bootstrap.sh
+
+    rm -- "$0"
+    exit
 }
 
 fn_main $1
