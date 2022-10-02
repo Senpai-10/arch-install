@@ -367,7 +367,9 @@ function fn_configure_the_system {
 
     systemctl enable NetworkManager.service
 
-    echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+    echo -e "root ALL=(ALL) ALL\n" > /etc/sudoers
+    echo -e "%wheel ALL=(ALL) ALL\n" >> /etc/sudoers
+    echo -e "@includedir /etc/sudoers.d\n" >> /etc/sudoers
 
     useradd -m -G wheel $USERNAME
 
