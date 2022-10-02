@@ -171,6 +171,8 @@ function fn_main {
     if [[ $1 = "--run-arch-chroot" ]]; then
         fn_configure_the_system
         fn_configure_the_system
+    elif [[ $1 = "--run-post-installation" ]]; then
+        fn_post_installation
     else
         # stop executing the script and wait for any key press
         # in case the script was ran by accident
@@ -364,19 +366,41 @@ function fn_configure_the_system {
 
     os-prober
 
-    local USER_PACKAGES="xorg-xwud xorg-xwininfo xorg-xwd xorg-xvinfo xorg-xset xorg-xrefresh xorg-xrdb ttf-fantasque-sans-mono ttf-fira-code ttf-liberation virt-manager virt-viewer wget xbindkeys xorg-bdftopcf xorg-docs xorg-font-util xorg-fonts-100dpi xorg-fonts-75dpi xorg-fonts-encodings xorg-iceauth xorg-mkfontscale xorg-server xorg-server-common xorg-server-devel xorg-server-xephyr xorg-server-xnest xorg-server-xvfb xorg-sessreg xorg-setxkbmap xorg-smproxy xorg-x11perf xorg-xauth xorg-xbacklight xorg-xcmsdb xorg-xcursorgen xorg-xdpyinfo xorg-xdriinfo xorg-xev xorg-xgamma xorg-xhost xorg-xinput xorg-xkbcomp xorg-xpr xorg-xrandr alacritty alsa-tools alsa-utils atom bashtop bat bc bitwarden bitwarden-cli bspwm cmus code discord dmenu dnsmasq docker easytag emacs fd feh fff ffmpegthumbnailer ffmpegthumbs flameshot gimp gnome-calculator highlight htop imwheel jgmenu lib32-libpulse libguestfs libpng12 libvirt lxappearance lxappearance-obconf menumaker nemo neofetch nitrogen nodejs npm obconf onboard pavucontrol python-setuptools qemu qemu-arch-extra redis reflector rofi rxvt-unicode scrot sdl_image steam terminus-font tree ttf-dejavu ttf-droid xorg-xkbevd xorg-xkbutils xorg-xlsatoms xorg-xlsclients xorg-xmodmap xorg-xinit xorg-xkill xorg-xsetroot xorg-xprop noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-jetbrains-mono ttf-joypixels ttf-font-awesome sxiv mpv zathura zathura-pdf-mupdf ffmpeg imagemagick fzf man-db python-pywal youtube-dl xclip maim zip unzip unrar p7zip xdotool papirus-icon-theme ntfs-3g sxhkd zsh arc-gtk-theme rsync firefox dash slock jq dhcpcd pamixer which yarn yad kdenlive kate gparted gtk4 gtop hwinfo tint2 dbeaver awesome picom libwacom eog github-cli transmission-gtk"
-
-    pacman -S --noconfirm $USER_PACKAGES
-
-    systemctl enable NetworkManager.service
-
-    chsh -s $(which zsh)
-
     echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
     useradd -m -G wheel $USERNAME
 
     echo "$USERNAME:$USER_PASSWORD" | chpasswd
+
+    #
+
+    local SCRIPT_PATH=/home/$USERNAME/arch-installer.sh
+
+    cp /arch-installer.sh $SCRIPT_PATH
+
+    chown $USERNAME:$USERNAME $SCRIPT_PATH
+
+    chmod +x $SCRIPT_PATH
+
+    echo "source $SCRIPT_PATH --run-post-installation" >> /home/$USERNAME/.bash_profile
+
+    fn_print_info "REMOVE INSTALLATION MEDIUM!!"
+    fn_print_info "after rebooting login as '$USERNAME'."
+
+    secs=$((5))
+
+    while [ $secs -gt 0 ]; do
+        echo -ne "REBOOTING in ${IRed}$secs${NO_COLOR}\033[0K\r"
+        sleep 1
+        : $((secs--))
+    done
+
+    exit
+    reboot
+}
+
+function fn_post_installation {
+    echo "hi post installation"
 }
 
 fn_main $1
