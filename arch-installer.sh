@@ -170,7 +170,7 @@ function fn_main {
 
     if [[ $1 = "--run-arch-chroot" ]]; then
         fn_configure_the_system
-        fun_configure_the_system
+        fn_configure_the_system
     else
         # stop executing the script and wait for any key press
         # in case the script was ran by accident
