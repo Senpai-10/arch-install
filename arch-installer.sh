@@ -391,7 +391,6 @@ function fn_configure_the_system {
         : $((secs--))
     done
 
-    exit
     reboot
 }
 
