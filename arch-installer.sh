@@ -398,7 +398,7 @@ function fn_post_installation {
 
     cd .dotfiles
 
-    ./bootstrap.sh
+    sudo ./bootstrap.sh
 
     #rm -- "$0"
     rm ~/arch-installer.sh
