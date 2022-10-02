@@ -18,14 +18,14 @@ ONLY_DO_BASE_INSTALLATION=false
 # example: "my-desktop"
 HOSTNAME=""
 
-# root user password
-ROOT_PASSWORD=""
-
 # your username
 USERNAME=""
 
 # your user password
 USER_PASSWORD=""
+
+# root user password
+ROOT_PASSWORD=""
 
 KEYMAP="us"
 
