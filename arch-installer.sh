@@ -109,7 +109,6 @@ function fn_main {
 
     if [[ $1 = "--run-arch-chroot" ]]; then
         fn_configure_the_system
-        echo "hi"
     elif [[ $1 = "--run-post-installation" ]]; then
         fn_post_installation
     else
