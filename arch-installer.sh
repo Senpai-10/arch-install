@@ -319,7 +319,7 @@ function fn_configure_the_system {
 
     echo "$USERNAME:$USER_PASSWORD" | chpasswd
 
-    if [ "$ONLY_DO_BASE_INSTALLATION" = true ] ; then
+    if [ "$ONLY_DO_BASE_INSTALLATION" = false ] ; then
         local SCRIPT_PATH=/home/$USERNAME/arch-installer.sh
 
         cp /arch-installer.sh $SCRIPT_PATH
