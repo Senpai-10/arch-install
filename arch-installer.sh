@@ -203,6 +203,8 @@ function stage_0_pre_installation {
 
     # mount
     mount $ROOT_PARTITION /mnt
+
+    mkdir /mnt/home
     mount $HOME_PARTITION /mnt/home
 
     if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
