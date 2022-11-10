@@ -156,6 +156,7 @@ function fn_check_missing_configs {
         exit 1
     fi
 }
+
 function fn_check_internet_connection {
     fn_print_info "Checking internet connection..."
 
@@ -246,9 +247,9 @@ function fn_pre_installation {
 function fn_main_installation {
         reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --verbose
 
-        local BASE_PACKAGES="base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim"
+        local BASE_PACKAGES=(base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim)
 
-        pacstrap /mnt "$BASE_PACKAGES"
+        pacstrap /mnt "${BASE_PACKAGES[@]}"
 
         genfstab -U /mnt >> /mnt/etc/fstab
 
