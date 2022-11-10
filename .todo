@@ -1,8 +1,0 @@
-remove conf from arch-installer.sh
-
-and if conf vars are not set
-echo $DEFAULT_CONF > arch-installer.conf
-
-add print_info edit arch-installer.conf
-and re run ./arch-installer.sh to mirage the conf into arch-installer.sh
-example: test-ai.sh
