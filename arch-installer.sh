@@ -265,7 +265,7 @@ function fn_configure_the_system {
 
     pacman -Sy
 
-    reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --verbose
+    reflector --latest 40 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --verbose
 
     local TIME_ZONE
 
