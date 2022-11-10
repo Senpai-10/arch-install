@@ -213,16 +213,16 @@ function stage_0_pre_installation {
 }
 
 function stage_1_main_installation {
-        local BASE_PACKAGES=(base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim reflector)
+    local BASE_PACKAGES=(base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim reflector)
 
-        pacstrap /mnt "${BASE_PACKAGES[@]}"
+    pacstrap /mnt "${BASE_PACKAGES[@]}"
 
-        genfstab -U /mnt >> /mnt/etc/fstab
+    genfstab -U /mnt >> /mnt/etc/fstab
 
-        cp arch-installer.sh /mnt/
+    cp arch-installer.sh /mnt/
 
-        arch-chroot /mnt ./arch-installer.sh stage_2
-        exit
+    arch-chroot /mnt ./arch-installer.sh stage_2
+    exit
 }
 
 function stage_2_configure_the_system {
