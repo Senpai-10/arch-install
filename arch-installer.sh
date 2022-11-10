@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eu
+
 VERSION="0.1.0"
 
 #########################
@@ -113,7 +115,7 @@ function fn_main {
     else
         # stop executing the script and wait for any key press
         # in case the script was ran by accident
-        read -rsn1 -p"Press any key to continue " variable;echo
+        read -rsn1 -p"Press any key to continue " ;echo
 
         fn_pre_installation
         fn_main_installation
@@ -122,7 +124,7 @@ function fn_main {
 }
 
 function fn_print_banner {
-    echo -e $IGreen
+    echo -e "$IGreen"
     cat << "EOF"
                  _           _           _        _ _
    __ _ _ __ ___| |__       (_)_ __  ___| |_ __ _| | | ___ _ __
@@ -130,7 +132,7 @@ function fn_print_banner {
  | (_| | | | (__| | | |_____| | | | \__ \ || (_| | | |  __/ |
   \__,_|_|  \___|_| |_|     |_|_| |_|___/\__\__,_|_|_|\___|_|
 EOF
-    echo -e $NO_COLOR
+    echo -e "$NO_COLOR"
 }
 
 function fn_print_info {
@@ -158,14 +160,11 @@ function fn_check_missing_configs {
 function fn_check_internet_connection {
     fn_print_info "Checking internet connection..."
 
+    # Because of set -e
+    # if ping fails it will exit with non zero code
     ping -c1 "8.8.8.8" &>"/dev/null"
 
-    if [[ "${?}" -ne 0 ]]; then
-        fn_print_error "No internect connection. Exiting now!"
-        exit 1
-    elif [[ "${#args[@]}" -eq 0 ]]; then
-        fn_print_info "internet connection found!"
-    fi
+    fn_print_info "internet connection found!"
 }
 
 function fn_pre_installation {
@@ -224,7 +223,7 @@ function fn_pre_installation {
     ECHO_FDISK+="\n"
     ECHO_FDISK+="w"
 
-    echo -e $ECHO_FDISK | fdisk -L=always $DRIVE
+    echo -e $ECHO_FDISK | fdisk -L=always "$DRIVE"
 
     mkfs.ext4 $ROOT_PARTITION
 
@@ -250,7 +249,7 @@ function fn_main_installation {
 
         local BASE_PACKAGES="base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim"
 
-        pacstrap /mnt $BASE_PACKAGES
+        pacstrap /mnt "$BASE_PACKAGES"
 
         genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -270,9 +269,11 @@ function fn_configure_the_system {
 
     reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --verbose
 
-    local TIME_ZONE=$(curl --fail https://ipapi.co/timezone)
+    local TIME_ZONE
 
-    ln -sf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime
+    TIME_ZONE=$(curl --fail https://ipapi.co/timezone)
+
+    ln -sf /usr/share/zoneinfo/"$TIME_ZONE" /etc/localtime
 
     hwclock --systohc
 
@@ -282,7 +283,7 @@ function fn_configure_the_system {
 
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
-    echo $HOSTNAME > /etc/hostname
+    echo "$HOSTNAME" > /etc/hostname
 
     echo "127.0.0.1       localhost" >> /etc/hosts
     echo "::1             localhost" >> /etc/hosts
@@ -293,11 +294,11 @@ function fn_configure_the_system {
     pacman --noconfirm -S grub efibootmgr networkmanager network-manager-applet wireless_tools wpa_supplicant os-prober mtools dosfstools
 
     if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
-        grub-install --target=i386-pc $DRIVE
+        grub-install --target=i386-pc "$DRIVE"
     fi
 
     if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
-        grub-install --target=x86_64-efi $DRIVE --efi-directory=$EFI_SYSTEM_PARTITION --bootloader-id=GRUB
+        grub-install --target=x86_64-efi "$DRIVE" --efi-directory=$EFI_SYSTEM_PARTITION --bootloader-id=GRUB
     fi
 
     grub-mkconfig -o /boot/grub/grub.cfg
@@ -312,7 +313,7 @@ function fn_configure_the_system {
     echo -e "%wheel ALL=(ALL) ALL\n" >> /etc/sudoers
     echo -e "@includedir /etc/sudoers.d\n" >> /etc/sudoers
 
-    useradd -m -G wheel $USERNAME
+    useradd -m -G wheel "$USERNAME"
 
     echo "$USERNAME:$USER_PASSWORD" | chpasswd
 
@@ -320,11 +321,11 @@ function fn_configure_the_system {
 
     cp /arch-installer.sh $SCRIPT_PATH
 
-    chown $USERNAME:$USERNAME $SCRIPT_PATH
+    chown "$USERNAME":"$USERNAME" $SCRIPT_PATH
 
     chmod +x $SCRIPT_PATH
 
-    echo "source $SCRIPT_PATH --run-post-installation" >> /home/$USERNAME/.bash_profile
+    echo "source $SCRIPT_PATH --run-post-installation" >> /home/"$USERNAME"/.bash_profile
 
     fn_print_info "remove installation medium and reboot!!"
     fn_print_info "after rebooting login as '$USERNAME'."
