@@ -319,15 +319,17 @@ function fn_configure_the_system {
 
     echo "$USERNAME:$USER_PASSWORD" | chpasswd
 
-    local SCRIPT_PATH=/home/$USERNAME/arch-installer.sh
+    if [ "$ONLY_DO_BASE_INSTALLATION" = true ] ; then
+        local SCRIPT_PATH=/home/$USERNAME/arch-installer.sh
 
-    cp /arch-installer.sh $SCRIPT_PATH
+        cp /arch-installer.sh $SCRIPT_PATH
 
-    chown "$USERNAME":"$USERNAME" $SCRIPT_PATH
+        chown "$USERNAME":"$USERNAME" $SCRIPT_PATH
 
-    chmod +x $SCRIPT_PATH
+        chmod +x $SCRIPT_PATH
 
-    echo "source $SCRIPT_PATH --run-post-installation" >> /home/"$USERNAME"/.bash_profile
+        echo "source $SCRIPT_PATH --run-post-installation" >> /home/"$USERNAME"/.bash_profile
+    fi
 
     fn_print_info "remove installation medium and reboot!!"
     fn_print_info "after rebooting login as '$USERNAME'."
