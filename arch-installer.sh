@@ -107,17 +107,17 @@ function main {
     echo -e "source: ${BIYellow}https://github.com/senpai-10/arch-install${NO_COLOR}"
     echo -e "Version: ${BIYellow}${VERSION}${NO_COLOR}"
 
-    if [[ $1 = "--run-arch-chroot" ]]; then
-        configure_the_system
-    elif [[ $1 = "--run-post-installation" ]]; then
-        post_installation
+    if [[ $1 = "stage_2" ]]; then
+        stage_2_configure_the_system
+    elif [[ $1 = "stage_3" ]]; then
+        stage_3_post_installation
     else
         # stop executing the script and wait for any key press
         # in case the script was ran by accident
         read -rsn1 -p"Press any key to continue " ;echo
 
-        pre_installation
-        main_installation
+        stage_0_pre_installation
+        stage_1_main_installation
     fi
 
 }
@@ -167,7 +167,7 @@ function check_internet_connection {
     print_info "internet connection found!"
 }
 
-function pre_installation {
+function stage_0_pre_installation {
     sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
     sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
@@ -244,7 +244,7 @@ function pre_installation {
     fi
 }
 
-function main_installation {
+function stage_1_main_installation {
         local BASE_PACKAGES=(base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim reflector)
 
         pacstrap /mnt "${BASE_PACKAGES[@]}"
@@ -253,11 +253,11 @@ function main_installation {
 
         cp arch-installer.sh /mnt/
 
-        arch-chroot /mnt ./arch-installer.sh --run-arch-chroot
+        arch-chroot /mnt ./arch-installer.sh stage_2
         exit
 }
 
-function configure_the_system {
+function stage_2_configure_the_system {
     # inside arch-chroot
 
     sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
@@ -326,7 +326,7 @@ function configure_the_system {
 
         chmod +x $SCRIPT_PATH
 
-        echo "source $SCRIPT_PATH --run-post-installation" >> /home/"$USERNAME"/.bash_profile
+        echo "echo \"Run \"$SCRIPT_PATH stage_3\"\"" >> /home/"$USERNAME"/.bash_profile
     fi
 
     print_info "remove installation medium and reboot!!"
@@ -335,7 +335,7 @@ function configure_the_system {
     exit
 }
 
-function post_installation {
+function stage_3_post_installation {
     sed -i '/arch/d' .bash_profile
 
     git clone https://github.com/Senpai-10/dotfiles.git .dotfiles
