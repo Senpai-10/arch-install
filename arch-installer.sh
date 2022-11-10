@@ -97,32 +97,32 @@ NO_COLOR='\033[0m'
 # END colors
 #########################
 
-function fn_main {
-    fn_check_missing_configs
+function main {
+    check_missing_configs
 
-    fn_check_internet_connection
+    check_internet_connection
 
-    fn_print_banner
+    print_banner
 
     echo -e "source: ${BIYellow}https://github.com/senpai-10/arch-install${NO_COLOR}"
     echo -e "Version: ${BIYellow}${VERSION}${NO_COLOR}"
 
     if [[ $1 = "--run-arch-chroot" ]]; then
-        fn_configure_the_system
+        configure_the_system
     elif [[ $1 = "--run-post-installation" ]]; then
-        fn_post_installation
+        post_installation
     else
         # stop executing the script and wait for any key press
         # in case the script was ran by accident
         read -rsn1 -p"Press any key to continue " ;echo
 
-        fn_pre_installation
-        fn_main_installation
+        pre_installation
+        main_installation
     fi
 
 }
 
-function fn_print_banner {
+function print_banner {
     echo -e "$IGreen"
     cat << "EOF"
                  _           _           _        _ _
@@ -134,40 +134,40 @@ EOF
     echo -e "$NO_COLOR"
 }
 
-function fn_print_info {
+function print_info {
     echo -e "[${IBlue}INFO${NO_COLOR}] ${IYellow}$*${NO_COLOR}"
 }
 
-function fn_print_error {
+function print_error {
     echo -e "[${IRed}ERROR${NO_COLOR}] ${IYellow}$*${NO_COLOR}"
 }
 
-function fn_print_warning {
+function print_warning {
     echo -e "[${IYellow}WARNING${NO_COLOR}] ${IYellow}$*${NO_COLOR}"
 }
 
-function fn_print_debug {
+function print_debug {
     echo -e "[${IGreen}DEBUG${NO_COLOR}] ${IYellow}$*${NO_COLOR}"
 }
 
-function fn_check_missing_configs {
+function check_missing_configs {
     if [[ -z $HOSTNAME || -z $ROOT_PASSWORD || -z $USERNAME || -z $USER_PASSWORD ]]; then
-        fn_print_error "Missing some configs!\n\tedit arch-installer.sh and set the config!"
+        print_error "Missing some configs!\n\tedit arch-installer.sh and set the config!"
         exit 1
     fi
 }
 
-function fn_check_internet_connection {
-    fn_print_info "Checking internet connection..."
+function check_internet_connection {
+    print_info "Checking internet connection..."
 
     # Because of set -e
     # if ping fails it will exit with non zero code
     ping -c1 "8.8.8.8" &>"/dev/null"
 
-    fn_print_info "internet connection found!"
+    print_info "internet connection found!"
 }
 
-function fn_pre_installation {
+function pre_installation {
     sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
     sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
@@ -244,7 +244,7 @@ function fn_pre_installation {
     fi
 }
 
-function fn_main_installation {
+function main_installation {
         local BASE_PACKAGES=(base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim reflector)
 
         pacstrap /mnt "${BASE_PACKAGES[@]}"
@@ -257,7 +257,7 @@ function fn_main_installation {
         exit
 }
 
-function fn_configure_the_system {
+function configure_the_system {
     # inside arch-chroot
 
     sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
@@ -329,13 +329,13 @@ function fn_configure_the_system {
         echo "source $SCRIPT_PATH --run-post-installation" >> /home/"$USERNAME"/.bash_profile
     fi
 
-    fn_print_info "remove installation medium and reboot!!"
-    fn_print_info "after rebooting login as '$USERNAME'."
+    print_info "remove installation medium and reboot!!"
+    print_info "after rebooting login as '$USERNAME'."
 
     exit
 }
 
-function fn_post_installation {
+function post_installation {
     sed -i '/arch/d' .bash_profile
 
     git clone https://github.com/Senpai-10/dotfiles.git .dotfiles
@@ -348,4 +348,4 @@ function fn_post_installation {
     rm ~/arch-installer.sh
 }
 
-fn_main "$*"
+main "$*"
