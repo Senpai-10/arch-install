@@ -347,4 +347,4 @@ function fn_post_installation {
     rm ~/arch-installer.sh
 }
 
-fn_main $1
+fn_main "$*"
