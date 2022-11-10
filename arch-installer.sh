@@ -396,7 +396,7 @@ function fn_post_installation {
 
     git clone https://github.com/Senpai-10/dotfiles.git .dotfiles
 
-    cd .dotfiles/management-scripts/
+    cd .dotfiles/ || :
 
     ./bootstrap.sh
 
