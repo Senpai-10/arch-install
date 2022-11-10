@@ -44,39 +44,32 @@ PARTITIONING_SCHEME=""
 # example: "/dev/sda"
 DRIVE=""
 
-# select if you want a swap file or a swap partition
-# Values:
-#       file
-#       partition
-SWAP_TYPE=""
-
-# The size of your swap partition/file
+# The size of your swap partition
 # Values:
 #       {size{G,M}}
 # example: 8G
-# this example will create a 8 gigabytes swap partition/file
 SWAP_SIZE=""
+
+ROOT_PARTITION_SIZE=""
+
+# Empty for the rest of the drive!
+# or '120G'
+HOME_PARTITION_SIZE=""
+
 
 #########################
 
-if [[ $PARTITIONING_SCHEME = "gpt" ]] && [[ $SWAP_TYPE = "partition" ]]; then
+if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
     EFI_SYSTEM_PARTITION="${DRIVE}1"
     SWAP_PARTITION="${DRIVE}2"
     ROOT_PARTITION="${DRIVE}3"
+    HOME_PARTITION="${DRIVE}4"
 fi
 
-if [[ $PARTITIONING_SCHEME = "gpt" ]] && [[ $SWAP_TYPE = "file" ]]; then
-    EFI_SYSTEM_PARTITION="${DRIVE}1"
-    ROOT_PARTITION="${DRIVE}2"
-fi
-
-if [[ $PARTITIONING_SCHEME = "mbr" ]] && [[ $SWAP_TYPE = "partition" ]]; then
+if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
     SWAP_PARTITION="${DRIVE}1"
     ROOT_PARTITION="${DRIVE}2"
-fi
-
-if [[ $PARTITIONING_SCHEME = "mbr" ]] && [[ $SWAP_TYPE = "file" ]]; then
-    ROOT_PARTITION="${DRIVE}1"
+    HOME_PARTITION="${DRIVE}3"
 fi
 
 #########################
@@ -177,67 +170,40 @@ function stage_0_pre_installation {
 
     timedatectl set-ntp true
 
-    ECHO_FDISK=""
-
     if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
-        ECHO_FDISK+="o\n"
+        echo 'label: mbr' | sfdisk "$DRIVE"
     fi
 
     if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
-        ECHO_FDISK+="g\n"
+        echo 'label: gpt' | sfdisk "$DRIVE"
+
         # Create boot partition
-        ECHO_FDISK+="n\n"
-        ECHO_FDISK+="\n"
-        ECHO_FDISK+="\n"
-        ECHO_FDISK+="+300M\n"
-        ECHO_FDISK+="t\n"
-        ECHO_FDISK+="uefi\n"
+        echo -e 'size=+300M, type=uefi' | sfdisk --append "$DRIVE"
     fi
 
-    if [[ $SWAP_TYPE = "partition" ]]; then
-        ECHO_FDISK+="n\n"
-        if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
-            # select primary partition
-            ECHO_FDISK+="p\n"
-        fi
-        # auto select partition number
-        ECHO_FDISK+="\n"
-        # select first sector
-        ECHO_FDISK+="\n"
-        ECHO_FDISK+="+$SWAP_SIZE\n"
-        # change partition type
-        ECHO_FDISK+="t\n"
-        ECHO_FDISK+="\n"
-        # select linux swap partition
-        ECHO_FDISK+="swap\n"
-    fi
+    # create swap partition
+    echo -e "size=+$SWAP_SIZE, type=swap" | sfdisk --append "$DRIVE"
 
     # create root partition
-    ECHO_FDISK+="n\n"
-    if [[ $PARTITIONING_SCHEME = "mbr" ]]; then
-        # select primary partition
-        ECHO_FDISK+="p\n"
-    fi
-    ECHO_FDISK+="\n"
-    ECHO_FDISK+="\n"
-    ECHO_FDISK+="\n"
-    ECHO_FDISK+="w"
+    echo -e "size=+$ROOT_PARTITION_SIZE, type=linux" | sfdisk --append "$DRIVE"
 
-    echo -e $ECHO_FDISK | fdisk -L=always "$DRIVE"
+    # create home partition
+    echo -e "size=+$HOME_PARTITION_SIZE, type=linux" | sfdisk --append "$DRIVE"
 
+    # format
     mkfs.ext4 $ROOT_PARTITION
+    mkfs.ext4 $HOME_PARTITION
 
-    if [[ $SWAP_TYPE = "partition" ]]; then
-        mkswap $SWAP_PARTITION
-
-        swapon $SWAP_PARTITION
-    fi
+    mkswap $SWAP_PARTITION
+    swapon $SWAP_PARTITION
 
     if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
         mkfs.fat -F 32 $EFI_SYSTEM_PARTITION
     fi
 
+    # mount
     mount $ROOT_PARTITION /mnt
+    mount $HOME_PARTITION /mnt/home
 
     if [[ $PARTITIONING_SCHEME = "gpt" ]]; then
         mount --mkdir $EFI_SYSTEM_PARTITION /mnt/boot
