@@ -245,8 +245,6 @@ function fn_pre_installation {
 }
 
 function fn_main_installation {
-        reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist --protocol https --verbose
-
         local BASE_PACKAGES=(base base-devel linux-lts linux-lts-headers linux linux-headers linux-firmware neovim reflector)
 
         pacstrap /mnt "${BASE_PACKAGES[@]}"
